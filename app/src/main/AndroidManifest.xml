@@ -13,7 +13,8 @@
     <!--사용 device의 카메라 접근-->
     <uses-permission android:name="android.permission.CAMERA"/>
 
-    <!--min sdk version은 gradle build script에 명시됨-->
+    <!--android studio에서는 min sdk version은 gradle build script에 명시됨-->
+    <!--<supports-screens>, <compatible-screens>는 아직 잘 판단이 안되서 구현을 하면서 추가하겠습니다.-->
 
     <application
         android:allowBackup="true"
