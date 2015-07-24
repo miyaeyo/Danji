@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Danji</string>
+    <string-array name="category_array">
+        <item>Movie</item>
+        <item>Drama</item>
+        <item>Book</item>
+        <item>Poem</item>
+        <item>Music</item>
+        <item>Cartoon</item>
+    </string-array>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

@@ -2,58 +2,162 @@
 
 <!--DANJI: 영화 속 감명깊었던 대사, 마음을 움직인 책 속 한 구절 등을 담아 둘 수 있는 공간-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nhnnext.android.miyaeyo.danji"
-    android:versionCode="1"
-    android:versionName="0.0.1">
-
+    package="com.nhnnext.android.miyaeyo.danji">
+    <!-- Min/target SDK versions (<uses-sdk>) and versionCode/Name managed by build.gradle -->
     <!--사용 device의 갤러리 접근-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--인터넷 연결-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--사용 device의 카메라 접근-->
     <uses-permission android:name="android.permission.CAMERA"/>
-
-    <!--android studio에서는 min sdk version은 gradle build script에 명시됨-->
-    <!--<supports-screens>, <compatible-screens>는 아직 잘 판단이 안되서 구현을 하면서 추가하겠습니다.-->
-
+    <!--uses-configuration default값으로 설정해 둠-->
+    <uses-configuration
+        android:reqFiveWayNav="false"
+        android:reqHardKeyboard="false"
+        android:reqKeyboardType="undefined"
+        android:reqNavigation="undefined"
+        android:reqTouchScreen="undefined"/>
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true"/>
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"/>
+    <!--compatible screens는 일단은 모든 screen size에 대응을 목표로하고 나중에 대응이 힘든부분이 있을 경우 지원 screen을 명시하여 대응이 힘든 크기와 해상도의 screen을 제외 하겠음-->
     <application
+        android:allowTaskReparenting="false"
         android:allowBackup="true"
+        android:enabled="true"
+        android:hasCode="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:killAfterRestore="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:persistent="false"
+        android:restoreAnyVersion="false"
+        android:theme="@style/AppTheme"
+        android:uiOptions="none">
 
         <!--Activity 1-->
         <!--menu button 4개(home, search, write, my page) 각각의 button을 누를 때 전환되는 화면 fragment로 구성-->
+        <!--화면 상단의 menu버튼 누르면 navigation bar가 나오고 해당 category click시 fragment1에 contents 뿌려줌-->
         <!--fragment1: Home 화면, contents를 모아서 보여주는 화면, 노출 순서는 좋아요 갯수 많은 순서-->
-        <!--fragment2: Search 화면, app DB내의 contents 검색해서 결과 보여줌-->
+        <!--fragment2: Search 화면, 검색 전에 떠있을 화면, 각 category별 contents 수를 보여줄 예정. 검색 후에는 fragment1에 contents 뿌려줌-->
         <!--fragment3: Write 화면, category를 고르는 화면->Activity3 or Activity4로 연결됨-->
         <!--fragment4: Mypage 화면, 내가 쓴글, 스크랩해온 글을 볼 수 있는 화면-->
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name=".show.MainActivity"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:theme="@style/AppTheme"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:windowSoftInputMode="stateUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!--Activity 2-->
-        <!--Side navigation bar: button을 click하면 Home 화면에 각 category에 해당하는 글만 보여줌-->
-        <!--Library를 가져다 쓸 수도 있음-->
-        <activity android:name=".SideNavBar"/>
+        <!--Activity2-->
+        <!--영화나 드라마의 대사를 입력하는 화면, 사진 추가시 device의 갤러리에 접근 가능해야 함. +버튼을 누르면 등장인물&명대사 행이 한줄씩 추가됨 -->
+        <activity
+            android:name=".write.WriteDialogQuotation"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:uiOptions="none"
+            android:windowSoftInputMode="stateUnspecified">
+            <intent-filter>
+                <action android:name="com.nhnnext.android.miyaeyo.danji.WRITE_DIALOG"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <!--Activity3-->
-        <!--영화나 드라마의 대사를 입력하는 화면, 사진 추가시 device의 갤러리에 접근 가능해야 함. +버튼을 누르면 등장인물&명대사 행이 한줄씩 추가됨 -->
-        <activity android:name=".WriteDialogQuotation"/>
+        <!--책, 시의 한구절 혹은 웹툰의 대사, 한컷, 노래의 한구절 등을 입력하는 화면-->
+        <activity
+            android:name=".write.WriteParagraphQuotation"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:uiOptions="none"
+            android:windowSoftInputMode="stateUnspecified">
+            <intent-filter>
+                <action android:name="com.nhnnext.android.miyaeyo.danji.WRITE_PARAGRAPH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <!--Activity4-->
-        <!--책, 시의 한구절 혹은 웹툰의 대사, 한컷, 노래의 한구절 등을 입력하는 화면-->
-        <activity android:name=".WriteParagraphQuotation"/>
-
-        <!--Activity5-->
         <!--Activity4에서 '앨범에서 사진가져오기' button을 누르면 뜨는 사진 편집기 화면-->
-        <activity android:name=".PhotoEditor"/>
-
+        <activity
+            android:name=".edit.PhotoEditor"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:windowSoftInputMode="stateUnspecified">
+            <intent-filter>
+                <action android:name="com.nhnnext.android.action.miyaeyo.danji.EDIT_PHOTO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
