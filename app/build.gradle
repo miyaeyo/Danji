@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+//[JH] min sdk, target sdk 정의에 대한 기획의도도 주석으로 작성이 되었으면 합니다.
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"

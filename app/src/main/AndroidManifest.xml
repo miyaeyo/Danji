@@ -17,6 +17,8 @@
         android:reqKeyboardType="undefined"
         android:reqNavigation="undefined"
         android:reqTouchScreen="undefined"/>
+    <!--[JH]Camera 사용 시 android.hardware.camera.autofocus 도 고려해보세요-->
+    <!--[JH]android.hardware.camera2 를 사용여부에 대해서도 검토 필요-->
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true"/>
