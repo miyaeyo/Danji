@@ -1,17 +1,22 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.nhnnext.android.miyaeyo.danji.R;
+
 
 /**To do
  * category별 contents 갯수가 들어간 이미지 버튼이 위치
  */
-public class WirteCategoryFragment extends Fragment {
+public class WriteCategoryFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -25,12 +30,19 @@ public class WirteCategoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.write_category_f, null);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Button movieBtn = (Button)getActivity().findViewById(R.id.write_movie);
+        Button dramaBtn = (Button)getActivity().findViewById(R.id.write_drama);
+        Button bookBtn = (Button)getActivity().findViewById(R.id.write_book);
+        Button poemBtn = (Button)getActivity().findViewById(R.id.write_poem);
+        Button musicBtn = (Button)getActivity().findViewById(R.id.write_music);
+        Button cartoonBtn = (Button)getActivity().findViewById(R.id.write_cartoon);
+
     }
 
     @Override

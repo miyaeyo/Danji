@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/drawer_movie"
+        android:title="@string/write_movie"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/drawer_drama"
+        android:title="@string/write_drama"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/drawer_book"
+        android:title="@string/write_book"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/drawer_poem"
+        android:title="@string/write_poem"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/drawer_music"
+        android:title="@string/write_music"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/drawer_cartoon"
+        android:title="@string/write_cartoon"
+        app:showAsAction="always"/>
+
+
+</menu>

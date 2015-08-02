@@ -17,8 +17,11 @@
         android:reqKeyboardType="undefined"
         android:reqNavigation="undefined"
         android:reqTouchScreen="undefined"/>
+    <!--[JH]Camera 사용 시 android.hardware.camera.autofocus 도 고려해보세요 7/27-->
+    <!--[JH]android.hardware.camera2 를 사용여부에 대해서도 검토 필요 7/27-->
+    <!--android.hardware.camera로 수정, autofocus와 flash, front등의 feature은 parent feature인 camera에 명시되어 있다고 합니다.-->
     <uses-feature
-        android:name="android.hardware.camera2"
+        android:name="android.hardware.camera"
         android:required="true"/>
     <supports-screens
         android:smallScreens="true"
@@ -32,7 +35,7 @@
         android:allowBackup="true"
         android:enabled="true"
         android:hasCode="true"
-        android:hardwareAccelerated="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:killAfterRestore="true"
         android:label="@string/app_name"
@@ -151,7 +154,7 @@
             android:relinquishTaskIdentity="false"
             android:screenOrientation="unspecified"
             android:stateNotNeeded="false"
-            android:uiOptions="splitActionBarWhenNarrow"
+            android:uiOptions="none"
             android:windowSoftInputMode="stateUnspecified">
             <intent-filter>
                 <action android:name="com.nhnnext.android.action.miyaeyo.danji.EDIT_PHOTO"/>

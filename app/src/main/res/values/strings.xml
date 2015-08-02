@@ -1,14 +1,17 @@
 <resources>
-    <string name="app_name">Danji</string>
-    <string-array name="category_array">
-        <item>Movie</item>
-        <item>Drama</item>
-        <item>Book</item>
-        <item>Poem</item>
-        <item>Music</item>
-        <item>Cartoon</item>
-    </string-array>
-
+    <string name="app_name">DANJI</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_home">Home</string>
+    <string name="action_search">Search</string>
+    <string name="action_write">Write</string>
+    <string name="action_mypage">MyPage</string>
+    <string name="write_movie">MOVIE</string>
+    <string name="write_drama">DRAMA</string>
+    <string name="write_book">BOOK</string>
+    <string name="write_poem">POEM</string>
+    <string name="write_music">MUSIC</string>
+    <string name="write_cartoon">CARTOON</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigaion drawer</string>
 </resources>

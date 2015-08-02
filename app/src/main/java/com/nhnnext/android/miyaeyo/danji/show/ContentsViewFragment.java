@@ -1,12 +1,14 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nhnnext.android.miyaeyo.danji.R;
 
 /** To do
  *  DB에서 모든 data다 받아와서 contents를 view에 맞게 뿌려줌
@@ -25,7 +27,7 @@ public class ContentsViewFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.contents_view_f, null);
     }
 
     @Override

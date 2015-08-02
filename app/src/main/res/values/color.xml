@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ColorPrimary">#ADCCC7</color>
+    <color name="ColorPrimaryDark">#ABCCC7</color>
+    <color name="tabColor">#FAAA63</color>
+    <color name="commonColor">#FEF2D8</color>
+    <color name="drawerColor">#D9F5E6</color>
+</resources>

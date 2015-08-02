@@ -1,12 +1,14 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nhnnext.android.miyaeyo.danji.R;
 
 /** To do
  * category별 contents갯수를 표시하는 창
@@ -26,7 +28,7 @@ public class BeforeSearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.before_search_f, null);
     }
 
     @Override

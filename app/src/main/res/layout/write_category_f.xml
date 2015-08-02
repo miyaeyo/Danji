@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/write_movie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_movie"/>
+    <Button
+        android:id="@+id/write_drama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_drama"/>
+    <Button
+        android:id="@+id/write_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_book"/>
+    <Button
+        android:id="@+id/write_poem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_poem"/>
+    <Button
+        android:id="@+id/write_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_music"/>
+    <Button
+        android:id="@+id/write_cartoon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_cartoon"/>
+</LinearLayout>
