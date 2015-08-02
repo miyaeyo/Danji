@@ -19,3 +19,5 @@
     - Activity3: WriteParagraphQuotation.java
 
     - Activity4: PhotoEditor.java
+
+2. 8/3 View and Fragment 연결: MainActivity의 toolbar, tab view, navigation drawer 구현 및 Fragment연결
