@@ -1,25 +1,23 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
-
-
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.nhnnext.android.miyaeyo.danji.adapter.DrawerListAdapter;
 import com.nhnnext.android.miyaeyo.danji.adapter.ViewPagerAdapter;
+import com.nhnnext.android.miyaeyo.danji.data.DrawerListData;
+
+import java.util.ArrayList;
 
 /** 7/24 lifecycle dummy code
  *  To do
@@ -35,7 +33,13 @@ import com.nhnnext.android.miyaeyo.danji.adapter.ViewPagerAdapter;
  *  To do
  *  1. toggle을 구현했는데 toggle icon이 보이지 않음.
  *  2. search icon 클릭시 BeforeSearchFragment로 전환되어야 하는데 지금 fragment가 setupViewPager를 통해서 전환되어서 search icon이랑은 연결안됨.
+ *
+ *  8/5 fragment / view
+ *  기획 수정
+ *  1. 처음 기획과 같이 하단 메뉴바 구성.
+ *  2. navigation drawer 오른쪽
  */
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -55,67 +59,31 @@ public class MainActivity extends ActionBarActivity {
         //    -> mypage: MyPageFragment
         // 3. action bar의 검색 버튼 과 검색 수행 method 연결
         //    -> searchContents() ->8/1 OnCreatOptionsMenu()안에서 구현했음
-
-
         Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         ViewPager mViewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(mViewPager);
 
-        final TabLayout mTabLayout = (TabLayout)findViewById(R.id.tab);
+        TabLayout mTabLayout = (TabLayout)findViewById(R.id.tab);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
-        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_create_white_24dp);
-        mTabLayout.getTabAt(2).setIcon(R.drawable.ic_face_white_24dp);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_search_white_24dp);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_24dp);
+        mTabLayout.getTabAt(3).setIcon(R.drawable.ic_face_white_24dp);
+
+        ArrayList<DrawerListData> drawerListDataArray = new ArrayList<DrawerListData>();
+        setDrawerList(drawerListDataArray);
+        DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        ListView mDrawerList = (ListView)findViewById(R.id.right_drawer);
+        DrawerListAdapter drawerListAdapter = new DrawerListAdapter(this, R.layout.drawer_list, drawerListDataArray);
+        mDrawerList.setAdapter(drawerListAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
-        final DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_menu_white_24dp, R.string.open_drawer, R.string.close_drawer){
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        final NavigationView mNavView = (NavigationView)findViewById(R.id.nav_view);
-        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.drawer_movie:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    case R.id.drawer_drama:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    case R.id.drawer_book:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    case R.id.drawer_poem:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    case R.id.drawer_music:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    case R.id.drawer_cartoon:
-                        mTabLayout.getTabAt(0);
-                        break;
-                    default:
-                        mTabLayout.getTabAt(0);
-                        break;
-                }
-                mDrawerLayout.closeDrawer(mNavView);
-                return true;
-            }
-        });
     }
 
     @Override
@@ -150,21 +118,15 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem drawerNavi = menu.findItem(R.id.drawer_navi);
+        drawerNavi.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onMenuItemClick(MenuItem item) {
                 return false;
             }
         });
 
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -172,13 +134,27 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class DrawerItemClickListener implements ListView.OnItemClickListener{
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        }
+    }
+
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ContentsViewFragment(),"home");
+        adapter.addFragment(new ContentsViewFragment(), "home");
+        adapter.addFragment(new BeforeSearchFragment(), "before search");
         adapter.addFragment(new WriteCategoryFragment(), "write");
         adapter.addFragment(new MyPageFragment(), "mypage");
         viewPager.setAdapter(adapter);
+    }
 
+    private void setDrawerList(ArrayList<DrawerListData> drawerListDataArray){
+        String[] itemTitle = getResources().getStringArray(R.array.contents_category_title);
+        int[] itemImage = getResources().getIntArray(R.array.contents_category_icon);
+        for(int i = 0; i< itemTitle.length; i++){
+            drawerListDataArray.add(new DrawerListData(itemTitle[i],itemImage[i]));
+        }
     }
 
     /* Swaps fragments in the main content view */

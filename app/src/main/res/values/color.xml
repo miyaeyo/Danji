@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ColorPrimary">#ADCCC7</color>
-    <color name="ColorPrimaryDark">#ABCCC7</color>
-    <color name="tabColor">#FAAA63</color>
+    <color name="ColorPrimaryDark">#A2CED7</color>
+    <color name="tabColor">#7D5C57</color>
     <color name="commonColor">#FEF2D8</color>
-    <color name="drawerColor">#D9F5E6</color>
+    <color name="drawerColor">#FBAA63</color>
+    <color name="buttonColor">#EDAEA9</color>
+    <color name="contentsBackroundColor">#FFFFFF</color>
 </resources>

@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="contents view fragment"
+    <ListView
+        android:id="@+id/contents_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30dp"/>
+        android:scrollbars="vertical"
+        android:choiceMode="singleChoice"
+        android:background="@color/commonColor"/>
 
 </LinearLayout>

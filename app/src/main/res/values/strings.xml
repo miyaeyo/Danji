@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DANJI</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_navi">Navigation</string>
     <string name="action_home">Home</string>
     <string name="action_search">Search</string>
     <string name="action_write">Write</string>
@@ -12,6 +12,7 @@
     <string name="write_poem">POEM</string>
     <string name="write_music">MUSIC</string>
     <string name="write_cartoon">CARTOON</string>
+    <string name="contents_reference_mark">中</string>
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigaion drawer</string>
 </resources>

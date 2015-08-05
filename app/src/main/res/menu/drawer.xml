@@ -3,28 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/drawer_movie"
+        android:icon="@drawable/ic_local_movies_white_24dp"
         android:title="@string/write_movie"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/drawer_drama"
+        android:icon="@drawable/ic_live_tv_white_24dp"
         android:title="@string/write_drama"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/drawer_book"
+        android:icon="@drawable/ic_book_white_24dp"
         android:title="@string/write_book"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/drawer_poem"
+        android:icon="@drawable/ic_filter_vintage_white_24dp"
         android:title="@string/write_poem"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/drawer_music"
+        android:icon="@drawable/ic_music_note_white_24dp"
         android:title="@string/write_music"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/drawer_cartoon"
+        android:icon="@drawable/ic_insert_emoticon_white_24dp"
         android:title="@string/write_cartoon"
-        app:showAsAction="always"/>
+        app:showAsAction="withText"/>
 
 
 </menu>

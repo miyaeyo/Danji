@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="contents_category_title">
+        <item>MOVIE</item>
+        <item>DRAMA</item>
+        <item>BOOK</item>
+        <item>POEM</item>
+        <item>MUSIC</item>
+        <item>CARTOON</item>
+    </string-array>
+    <integer-array name="contents_category_icon">
+        <item>@drawable/ic_local_movies_white_24dp</item>
+        <item>@drawable/ic_live_tv_white_24dp</item>
+        <item>@drawable/ic_book_white_24dp</item>
+        <item>@drawable/ic_filter_vintage_white_24dp</item>
+        <item>@drawable/ic_music_note_white_24dp</item>
+        <item>@drawable/ic_insert_emoticon_white_24dp</item>
+    </integer-array>
+</resources>
