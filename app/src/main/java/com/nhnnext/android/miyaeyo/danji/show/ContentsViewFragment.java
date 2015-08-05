@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
@@ -18,7 +20,10 @@ import java.util.ArrayList;
 /** To do
  *  DB에서 모든 data다 받아와서 contents를 view에 맞게 뿌려줌
  */
-public class ContentsViewFragment extends Fragment {
+public class ContentsViewFragment extends Fragment{
+    private int[] likeCount = new int[6];
+    private View inflatedView;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -32,13 +37,13 @@ public class ContentsViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contents_view_f, null);
+
+        return inflatedView = inflater.inflate(R.layout.contents_view_f, null);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
@@ -77,18 +82,14 @@ public class ContentsViewFragment extends Fragment {
     }
 
     private void setContentsList(ArrayList<ContentsListData> contentsListDataArray) {
-        int movieLike = 0, dramaLike = 0, bookLike = 0, poemLike = 0, musicLike = 0, cartoonLike = 0;
-        ContentsListData movie = new ContentsListData("movie.jpeg",getString(R.string.movie_contents_body),getString(R.string.movie_contents_reference), movieLike);
-        contentsListDataArray.add(movie);
-        ContentsListData drama = new ContentsListData("drama.jpeg",getString(R.string.drama_contents_body),getString(R.string.drama_contents_reference), dramaLike);
-        contentsListDataArray.add(drama);
-        ContentsListData book = new ContentsListData("book.jpeg",getString(R.string.book_contents_body),getString(R.string.book_contents_reference), bookLike);
-        contentsListDataArray.add(book);
-        ContentsListData poem = new ContentsListData("poem.jpeg",getString(R.string.poem_contents_body),getString(R.string.poem_contents_reference), poemLike);
-        contentsListDataArray.add(poem);
-        ContentsListData music = new ContentsListData("music.jpeg",getString(R.string.music_contents_body),getString(R.string.music_contents_reference), musicLike);
-        contentsListDataArray.add(music);
-        ContentsListData cartoon = new ContentsListData("cartoon.jpeg",getString(R.string.cartoon_contents_body),getString(R.string.cartoon_contents_reference), cartoonLike);
-        contentsListDataArray.add(cartoon);
+        String[] imageFileName = getResources().getStringArray(R.array.image_file_name);
+        String[] contentsBody = getResources().getStringArray(R.array.contents_body);
+        String[] contentsRefer = getResources().getStringArray(R.array.contents_reference);
+
+        for(int i = 0; i<imageFileName.length; i++){
+            ContentsListData contentsListData = new ContentsListData(imageFileName[i], contentsBody[i], contentsRefer[i], likeCount[i]);
+            contentsListDataArray.add(contentsListData);
+        }
     }
+
 }

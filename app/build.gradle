@@ -9,8 +9,8 @@ android {
         //[JH] min sdk, target sdk 정의에 대한 기획의도도 주석으로 작성이 되었으면 합니다.7/27
         minSdkVersion 16 //Jelly bean까지의 android sdk version 점유율이 90%가까이 되기 때문에 7/27
         targetSdkVersion 22 //target은 최신버전 7/27
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 4
+        versionName "0.0.4"
     }
     buildTypes {
         release {

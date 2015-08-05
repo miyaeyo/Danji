@@ -31,4 +31,8 @@ public class ContentsListData {
     public int getLikeCount() {
         return likeCount;
     }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 }

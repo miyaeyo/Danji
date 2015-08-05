@@ -2,12 +2,16 @@ package com.nhnnext.android.miyaeyo.danji.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,28 +39,42 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if(view == null){
+        final int mPosition = position;
+        if(convertView == null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            view = inflater.inflate(layoutResourceId, parent, false);
+            convertView = inflater.inflate(layoutResourceId, parent, false);
         }
 
-        TextView contentsBody = (TextView)view.findViewById(R.id.contents_body);
-        TextView contentsRefer = (TextView)view.findViewById(R.id.contents_reference);
-        TextView likeCount = (TextView)view.findViewById(R.id.count_like);
+        ImageButton likeButton = (ImageButton)convertView.findViewById(R.id.like_button);
+        likeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                int count = contentsListData.get(mPosition).getLikeCount();
+                count++;
+                contentsListData.get(mPosition).setLikeCount(count);
+            }
+        });
 
-        contentsBody.setText(contentsListData.get(position).getContentsBody());
-        contentsRefer.setText(contentsListData.get(position).getContentsRefer());
-        likeCount.setText(""+contentsListData.get(position).getLikeCount());
+        TextView contentsBody = (TextView)convertView.findViewById(R.id.contents_body);
+        TextView contentsRefer = (TextView)convertView.findViewById(R.id.contents_reference);
+        TextView likeCount = (TextView)convertView.findViewById(R.id.count_like);
 
-        ImageView contentsImage = (ImageView)view.findViewById(R.id.contents_image);
+        contentsBody.setText(contentsListData.get(mPosition).getContentsBody());
+        contentsRefer.setText(contentsListData.get(mPosition).getContentsRefer());
+        likeCount.setText(""+contentsListData.get(mPosition).getLikeCount());
+
+        ImageView contentsImage = (ImageView)convertView.findViewById(R.id.contents_image);
         try{
-            InputStream inputStream = context.getAssets().open(contentsListData.get(position).getContentsImage());
-            Drawable drawable = Drawable.createFromStream(inputStream, null);
-            contentsImage.setImageDrawable(drawable);
+            InputStream inputStream = context.getAssets().open(contentsListData.get(mPosition).getContentsImage());
+            Bitmap image = BitmapFactory.decodeStream(inputStream);
+            contentsImage.setImageBitmap(image);
+            contentsImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         } catch(IOException e){
             Log.e("ERROR", "ERROR: "+e);
         }
-        return view;
+
+
+
+        return convertView;
     }
 }

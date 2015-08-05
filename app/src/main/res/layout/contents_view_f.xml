@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:choiceMode="singleChoice"
-        android:background="@color/commonColor"/>
+        android:background="@color/commonColor"
+        android:padding="15dp"/>
 
 </LinearLayout>
