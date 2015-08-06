@@ -26,5 +26,7 @@
     <string name="no_picture">NO picture</string>
     <string name="creator">CREATOR</string>
     <string name="paragraph">PARAGRAPH</string>
+    <string name="like">I like it!</string>
+    <string name="save">successfully saved!</string>
 
 </resources>

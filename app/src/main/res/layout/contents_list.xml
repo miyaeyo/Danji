@@ -56,8 +56,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/drawerColor"
-                android:layout_marginRight="5dp"
-                android:onClick="referenceSearch"/>
+                android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/contents_reference_mark"
                 android:layout_width="wrap_content"

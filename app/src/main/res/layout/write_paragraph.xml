@@ -11,14 +11,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/none"
             android:text="@string/cancel"
-            android:textColor="@color/commonColor"/>
+            android:textColor="@color/commonColor"
+            android:onClick="buttonClick"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -33,7 +36,8 @@
             android:layout_height="match_parent"
             android:background="@color/none"
             android:text="@string/complete"
-            android:textColor="@color/commonColor"/>
+            android:textColor="@color/commonColor"
+            android:onClick="buttonClick"/>
     </LinearLayout>
     <EditText
         android:id="@+id/write_title"
@@ -86,7 +90,8 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:background="@color/ColorPrimary"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:onClick="buttonClick"/>
             <Button
                 android:id="@+id/gallery"
                 android:layout_width="0dp"
@@ -96,7 +101,8 @@
                 android:textColor="@color/commonColor"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:background="@color/ColorPrimary"/>
+                android:background="@color/ColorPrimary"
+                android:onClick="buttonClick"/>
         </LinearLayout>
 
     </LinearLayout>

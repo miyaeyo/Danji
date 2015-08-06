@@ -1,11 +1,21 @@
 package com.nhnnext.android.miyaeyo.danji.write;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.nhnnext.android.miyaeyo.danji.adapter.DialogWriteFormAdapter;
+import com.nhnnext.android.miyaeyo.danji.data.DialogWriteData;
+import com.nhnnext.android.miyaeyo.danji.show.MainActivity;
+
+import java.util.ArrayList;
 
 /** To do
  * 1. Action bar의 취소 버튼 누르면 작성을 종료 하겠냐는 팝업 창 띄우고 확인 누르면 MainActivity로 돌아가고 취소버튼 누르면 작성창 그대
@@ -24,6 +34,7 @@ public class WriteDialogQuotation extends Activity{
         //3. +버튼 addColumn()과 연결
         //4. 카메라 버튼 누르면 takePhoto() 연결
         //5. 갤러리 버튼 누르면 selectPhoto() 연결
+
     }
 
     @Override
@@ -74,4 +85,34 @@ public class WriteDialogQuotation extends Activity{
     // storeTemporarily(); 작성내용 임시저장
     // takePhoto(); 카메라 연결하고 사진찍고나면 PhotoEditor호출
     // selectPhoto(); 갤러리 연결하고 사진선택하면 PhotoEditor호출
+
+    public void buttonClick(View view){
+        Intent intent;
+        switch (view.getId()){
+            case R.id.cancel_button:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.complete_button:
+                Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.camera:
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 100);
+                break;
+            case R.id.gallery:
+                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, RESULT_OK);
+                break;
+            case R.id.add_button:
+                ArrayList<DialogWriteData>  dialogWriteData= new ArrayList<DialogWriteData>();
+                ListView listView = (ListView)findViewById(R.id.dialog_listview);
+                DialogWriteFormAdapter dialogWriteFormAdapter = new DialogWriteFormAdapter(this, R.layout.contents_list, dialogWriteData);
+                listView.setAdapter(dialogWriteFormAdapter);
+                break;
+        }
+    }
+
 }
