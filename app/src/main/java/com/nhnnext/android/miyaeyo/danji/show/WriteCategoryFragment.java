@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.nhnnext.android.miyaeyo.danji.write.WriteDialogQuotation;
 
 
 /**To do
  * category별 contents 갯수가 들어간 이미지 버튼이 위치
  */
 public class WriteCategoryFragment extends Fragment {
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -36,12 +38,6 @@ public class WriteCategoryFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button movieBtn = (Button)getActivity().findViewById(R.id.write_movie);
-        Button dramaBtn = (Button)getActivity().findViewById(R.id.write_drama);
-        Button bookBtn = (Button)getActivity().findViewById(R.id.write_book);
-        Button poemBtn = (Button)getActivity().findViewById(R.id.write_poem);
-        Button musicBtn = (Button)getActivity().findViewById(R.id.write_music);
-        Button cartoonBtn = (Button)getActivity().findViewById(R.id.write_cartoon);
 
     }
 
@@ -74,4 +70,6 @@ public class WriteCategoryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+
 }

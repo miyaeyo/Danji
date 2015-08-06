@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nhnnext.android.miyaeyo.danji.R;
+
 /**To do
  * 1. Action bar의 취소 버튼 누르면 작성을 종료 하겠냐는 팝업 창 띄우고 확인 누르면 MainActivity로 돌아가고 취소버튼 누르면 작성창 그대로
  * 2. Action bar의 완료버튼 누르면 DB에 저장하고 MainActivity로 돌아옴
@@ -15,6 +17,7 @@ public class WriteParagraphQuotation extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.write_paragraph);
         //1. Action bar의 취소버튼 누르면 popup window로 연결(popup window의 확인버튼 -> MainActivity로, 취소버튼 -> 작성중이던 창으로)
         //2. Action bar의 완료버튼 누르면 completeWriting() 연결
         //3. 카메라 버튼 누르면 takePhoto() 연결

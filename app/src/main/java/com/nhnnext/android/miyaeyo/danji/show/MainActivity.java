@@ -1,5 +1,6 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,8 @@ import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.adapter.DrawerListAdapter;
 import com.nhnnext.android.miyaeyo.danji.adapter.ViewPagerAdapter;
 import com.nhnnext.android.miyaeyo.danji.data.DrawerListData;
+import com.nhnnext.android.miyaeyo.danji.write.WriteDialogQuotation;
+import com.nhnnext.android.miyaeyo.danji.write.WriteParagraphQuotation;
 
 import java.util.ArrayList;
 
@@ -155,6 +158,24 @@ public class MainActivity extends ActionBarActivity {
         for(int i = 0; i< itemTitle.length; i++){
             drawerListDataArray.add(new DrawerListData(itemTitle[i],itemImage[i]));
         }
+    }
+
+    public void categoryButtonClick(View view){
+
+        switch(view.getId()){
+            case R.id.write_movie:case R.id.write_drama:
+                Intent dialogIntent = new Intent(this, WriteDialogQuotation.class);
+                startActivity(dialogIntent);
+                break;
+            case R.id.write_book:case R.id.write_poem:case R.id.write_music:case R.id.write_cartoon:
+                Intent paraIntent = new Intent(this, WriteParagraphQuotation.class);
+                startActivity(paraIntent);
+                break;
+        }
+    }
+    public void referenceSearch(View view){
+        Intent referSearchIntent = new Intent(Intent.ACTION_VIEW);
+
     }
 
     /* Swaps fragments in the main content view */

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complete">완료</string>
+    <string name="cancel">취소</string>
+    <string name="write">글쓰기</string>
+    <string name="write_title">제목</string>
+    <string name="character_name">등장인물</string>
+    <string name="dialog_quotation">명대사</string>
+    <string name="camera">카메라</string>
+    <string name="gallery">갤러리</string>
+    <string name="creator">창작자</string>
+    <string name="paragraph">내용</string>
+</resources>

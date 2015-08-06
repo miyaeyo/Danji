@@ -6,6 +6,8 @@
     <TextView
         android:text="edit photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:textSize="30dp"
+        android:gravity="center"/>
 
 </LinearLayout>

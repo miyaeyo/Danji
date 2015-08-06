@@ -7,30 +7,36 @@
         android:id="@+id/write_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_movie"/>
+        android:text="@string/write_movie"
+        android:onClick="categoryButtonClick"/>
     <Button
         android:id="@+id/write_drama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_drama"/>
+        android:text="@string/write_drama"
+        android:onClick="categoryButtonClick"/>
     <Button
         android:id="@+id/write_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_book"/>
+        android:text="@string/write_book"
+        android:onClick="categoryButtonClick"/>
     <Button
         android:id="@+id/write_poem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_poem"/>
+        android:text="@string/write_poem"
+        android:onClick="categoryButtonClick"/>
     <Button
         android:id="@+id/write_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_music"/>
+        android:text="@string/write_music"
+        android:onClick="categoryButtonClick"/>
     <Button
         android:id="@+id/write_cartoon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/write_cartoon"/>
+        android:text="@string/write_cartoon"
+        android:onClick="categoryButtonClick"/>
 </LinearLayout>

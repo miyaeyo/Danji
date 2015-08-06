@@ -15,4 +15,16 @@
     <string name="contents_reference_mark">中</string>
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigaion drawer</string>
+    <string name="complete">COMPLETE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="write">WRITE</string>
+    <string name="write_title">TITLE</string>
+    <string name="character_name">CHARACTER</string>
+    <string name="dialog_quotation">DIALOG</string>
+    <string name="camera">CAMERA</string>
+    <string name="gallery">GALLERY</string>
+    <string name="no_picture">NO picture</string>
+    <string name="creator">CREATOR</string>
+    <string name="paragraph">PARAGRAPH</string>
+
 </resources>

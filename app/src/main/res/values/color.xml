@@ -7,4 +7,5 @@
     <color name="drawerColor">#FBAA63</color>
     <color name="buttonColor">#EDAEA9</color>
     <color name="contentsBackroundColor">#FFFFFF</color>
+    <color name="none">#00ff0000</color>
 </resources>

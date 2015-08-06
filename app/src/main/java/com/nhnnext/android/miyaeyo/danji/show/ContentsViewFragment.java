@@ -7,8 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
@@ -20,9 +19,7 @@ import java.util.ArrayList;
 /** To do
  *  DB에서 모든 data다 받아와서 contents를 view에 맞게 뿌려줌
  */
-public class ContentsViewFragment extends Fragment{
-    private int[] likeCount = new int[6];
-    private View inflatedView;
+public class ContentsViewFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
@@ -38,7 +35,7 @@ public class ContentsViewFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflatedView = inflater.inflate(R.layout.contents_view_f, null);
+        return inflater.inflate(R.layout.contents_view_f, null);
     }
 
     @Override
@@ -49,16 +46,29 @@ public class ContentsViewFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        View.OnClickListener onLikeButtonClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
         ArrayList<ContentsListData> contentsListDataArray = new ArrayList<ContentsListData>();
         setContentsList(contentsListDataArray);
         ListView listView = (ListView)getActivity().findViewById(R.id.contents_view);
-        ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray);
+        ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray, onLikeButtonClickListener);
         listView.setAdapter(contentsListAdapter);
+
+
+
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+
+
     }
 
     @Override
@@ -85,11 +95,13 @@ public class ContentsViewFragment extends Fragment{
         String[] imageFileName = getResources().getStringArray(R.array.image_file_name);
         String[] contentsBody = getResources().getStringArray(R.array.contents_body);
         String[] contentsRefer = getResources().getStringArray(R.array.contents_reference);
+        int[] likeCount = new int[6];
 
         for(int i = 0; i<imageFileName.length; i++){
             ContentsListData contentsListData = new ContentsListData(imageFileName[i], contentsBody[i], contentsRefer[i], likeCount[i]);
             contentsListDataArray.add(contentsListData);
         }
     }
+
 
 }

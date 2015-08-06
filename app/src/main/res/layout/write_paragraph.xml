@@ -1,13 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:text="write paragraph"
+    android:layout_height="match_parent"
+    android:background="@color/commonColor">
+    <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/none"
+            android:text="@string/cancel"
+            android:textColor="@color/commonColor"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/write"
+            android:textColor="@color/commonColor"
+            android:gravity="center"
+            android:textSize="30dp"/>
+        <Button
+            android:id="@+id/complete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/none"
+            android:text="@string/complete"
+            android:textColor="@color/commonColor"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/write_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="@string/write_title"
         android:gravity="center"
-        android:textSize="30dp"/>
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/creator"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="@string/creator"
+        android:gravity="center"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/paragraph"
+        android:gravity="center"
+        android:textSize="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@color/contentsBackroundColor"
+            android:contentDescription="@string/no_picture"
+            android:layout_margin="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/camera"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/camera"
+                android:textColor="@color/commonColor"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="@color/ColorPrimary"
+                android:layout_marginRight="5dp"/>
+            <Button
+                android:id="@+id/gallery"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/gallery"
+                android:textColor="@color/commonColor"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="@color/ColorPrimary"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

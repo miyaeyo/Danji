@@ -36,7 +36,7 @@
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:background="@color/buttonColor"
-            android:onClick="onClick"/>
+            android:focusable="true"/>
         <TextView
             android:id="@+id/count_like"
             android:layout_width="20dp"
@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:textColor="@color/drawerColor"
                 android:layout_marginRight="5dp"
-                android:onClick="searchReference"/>
+                android:onClick="referenceSearch"/>
             <TextView
                 android:id="@+id/contents_reference_mark"
                 android:layout_width="wrap_content"
@@ -66,7 +66,8 @@
                 android:gravity="center"
                 android:textColor="@color/drawerColor"
                 android:textStyle="bold"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:focusable="true"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
