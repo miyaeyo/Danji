@@ -138,7 +138,7 @@
         </activity>
 
         <!--Activity4-->
-        <!--Activity4에서 '앨범에서 사진가져오기' button을 누르면 뜨는 사진 편집기 화면-->
+        <!--Activity2,3에서 사진을 load할 때 뜨는 화면-->
         <activity
             android:name=".edit.PhotoEditor"
             android:allowTaskReparenting="false"
@@ -161,6 +161,34 @@
             android:windowSoftInputMode="stateUnspecified">
             <intent-filter>
                 <action android:name="com.nhnnext.android.action.miyaeyo.danji.EDIT_PHOTO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <!--Activity5-->
+        <!--contents의 제목(주황색, reference)click시 네이버 검색 page로 연결-->
+        <activity
+            android:name=".show.SearchWebview"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:uiOptions="none"
+            android:windowSoftInputMode="stateUnspecified">
+            <intent-filter>
+                <action android:name="com.nhnnext.android.action.miyaeyo.danji.SEARCH_WEBVIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

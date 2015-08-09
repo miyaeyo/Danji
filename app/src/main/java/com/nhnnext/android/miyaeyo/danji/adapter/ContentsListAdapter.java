@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
+import com.nhnnext.android.miyaeyo.danji.show.SearchWebview;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,14 +34,14 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
     private Context context;
     private int layoutResourceId;
     private ArrayList<ContentsListData> contentsListData;
-    private View.OnClickListener onClickListener;
 
-    public ContentsListAdapter(Context context, int layoutResourceId, ArrayList<ContentsListData> contentsListData, View.OnClickListener onClickListener){
+
+    public ContentsListAdapter(Context context, int layoutResourceId, ArrayList<ContentsListData> contentsListData){
         super(context, layoutResourceId, contentsListData);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.contentsListData = contentsListData;
-        this.onClickListener = onClickListener;
+
     }
 
     @Override
@@ -66,11 +68,11 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
         TextView contentsBody = (TextView)convertView.findViewById(R.id.contents_body);
         TextView contentsRefer = (TextView)convertView.findViewById(R.id.contents_reference);
         contentsRefer.setOnClickListener(new View.OnClickListener() {
-            final String search="http://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&ie=utf8&query=";
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(search+Uri.encode(contentsListData.get(position).getContentsRefer())));
+                Intent intent = new Intent(getContext(), SearchWebview.class);
+                String searchQuery = Uri.encode(contentsListData.get(position).getContentsRefer());
+                intent.putExtra("Query", searchQuery);
                 context.startActivity(intent);
             }
         });

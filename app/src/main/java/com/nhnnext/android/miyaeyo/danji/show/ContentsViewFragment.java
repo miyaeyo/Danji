@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
@@ -46,21 +45,11 @@ public class ContentsViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        View.OnClickListener onLikeButtonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        };
         ArrayList<ContentsListData> contentsListDataArray = new ArrayList<ContentsListData>();
         setContentsList(contentsListDataArray);
         ListView listView = (ListView)getActivity().findViewById(R.id.contents_view);
-        ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray, onLikeButtonClickListener);
+        ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray);
         listView.setAdapter(contentsListAdapter);
-
-
-
-
     }
 
     @Override
