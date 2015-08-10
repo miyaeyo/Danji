@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item
-        android:id="@+id/drawer_navi"
-        android:icon="@drawable/ic_menu_white_24dp"
-        android:title="@string/action_navi"
+        android:id="@+id/scrape_inbox"
+        android:icon="@drawable/ic_inbox_white_24dp"
+        android:title="@string/action_inbox"
         app:showAsAction="always"/>
 
 </menu>

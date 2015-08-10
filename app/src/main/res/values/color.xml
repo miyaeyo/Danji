@@ -5,6 +5,7 @@
     <color name="tabColor">#7D5C57</color>
     <color name="commonColor">#FEF2D8</color>
     <color name="drawerColor">#FBAA63</color>
+    <color name="pressedColor">#7D5C57</color>
     <color name="buttonColor">#EDAEA9</color>
     <color name="contentsBackroundColor">#FFFFFF</color>
     <color name="none">#00ff0000</color>

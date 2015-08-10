@@ -18,7 +18,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
@@ -38,11 +38,12 @@
         android:id="@+id/right_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
+        android:layout_gravity="left|start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="@color/drawerColor"
-        app:menu="@menu/drawer"/>
+        android:listSelector="@drawable/list_selector"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"/>
 </android.support.v4.widget.DrawerLayout>
 

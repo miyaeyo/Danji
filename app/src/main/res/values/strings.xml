@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DANJI</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_navi">Navigation</string>
+    <string name="action_inbox">Inbox</string>
     <string name="action_home">Home</string>
     <string name="action_search">Search</string>
     <string name="action_write">Write</string>
@@ -28,4 +28,5 @@
     <string name="paragraph">PARAGRAPH</string>
     <string name="like">I like it!</string>
     <string name="save">successfully saved!</string>
+    <string name="desc_list_item_icon">Item icon</string>
 </resources>

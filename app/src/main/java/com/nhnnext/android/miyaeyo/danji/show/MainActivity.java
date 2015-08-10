@@ -1,11 +1,14 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,13 +47,19 @@ import java.util.ArrayList;
  */
 
 
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends AppCompatActivity {
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private TabLayout mTabLayout;
+    private Toolbar mToolbar;
+    private ViewPager mViewPager;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // 1. Action bar에서 navigation drawer toggle버튼을 클릭하면 navigation list가 나옴
         //    -> navigation list에 eventlistener 설정
         //    -> selectCategory() -> 8/1 onNavigationItemSelected() override method로 구현 했음
@@ -62,30 +71,55 @@ public class MainActivity extends ActionBarActivity {
         //    -> mypage: MyPageFragment
         // 3. action bar의 검색 버튼 과 검색 수행 method 연결
         //    -> searchContents() ->8/1 OnCreatOptionsMenu()안에서 구현했음
-        Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mTitle = mDrawerTitle = getTitle();
+
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        ViewPager mViewPager = (ViewPager)findViewById(R.id.view_pager);
+
+        mViewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(mViewPager);
 
-        TabLayout mTabLayout = (TabLayout)findViewById(R.id.tab);
+        mTabLayout = (TabLayout)findViewById(R.id.tab);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         mTabLayout.getTabAt(1).setIcon(R.drawable.ic_search_white_24dp);
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_24dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.ic_face_white_24dp);
 
-        ArrayList<DrawerListData> drawerListDataArray = new ArrayList<DrawerListData>();
-        setDrawerList(drawerListDataArray);
-        DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        ListView mDrawerList = (ListView)findViewById(R.id.right_drawer);
-        DrawerListAdapter drawerListAdapter = new DrawerListAdapter(this, R.layout.drawer_list, drawerListDataArray);
-        mDrawerList.setAdapter(drawerListAdapter);
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView)findViewById(R.id.right_drawer);
+        ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
+        setDrawerList(drawerListItems);
+        mDrawerList.setAdapter(new DrawerListAdapter(this, drawerListItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                mToolbar,
+                R.string.open_drawer,
+                R.string.close_drawer
+        ){
+            public void onDrawerClosed(View view){
+                getSupportActionBar().setTitle(mTitle);
+            }
+            public void onDrawerOpened(View drawerView){
+                getSupportActionBar().setTitle(mDrawerTitle);
+            }
+
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if(savedInstanceState == null){
+            selectItem(0);
+        }
+
 
     }
 
@@ -121,27 +155,40 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem drawerNavi = menu.findItem(R.id.drawer_navi);
-        drawerNavi.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(mDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
         }
     }
+    private void selectItem(int position){
+        // categrory에 해당하는 contents만 home화면에 뿌려줌
+    }
+
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -154,10 +201,11 @@ public class MainActivity extends ActionBarActivity {
 
     private void setDrawerList(ArrayList<DrawerListData> drawerListDataArray){
         String[] itemTitle = getResources().getStringArray(R.array.contents_category_title);
-        int[] itemImage = getResources().getIntArray(R.array.contents_category_icon);
+        TypedArray itemIcon = getResources().obtainTypedArray(R.array.contents_category_icon);
         for(int i = 0; i< itemTitle.length; i++){
-            drawerListDataArray.add(new DrawerListData(itemTitle[i],itemImage[i]));
+            drawerListDataArray.add(new DrawerListData(itemTitle[i],itemIcon.getResourceId(i,-1)));
         }
+        itemIcon.recycle();
     }
 
     public void categoryButtonClick(View view){
@@ -173,6 +221,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
         }
     }
+
     public void referenceSearch(View view){
         Intent referSearchIntent = new Intent(Intent.ACTION_VIEW);
 

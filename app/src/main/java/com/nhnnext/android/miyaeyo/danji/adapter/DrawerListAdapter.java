@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,31 +20,43 @@ import java.util.ArrayList;
 /**
  * Created by miyaeyo on 2015. 8. 4..
  */
-public class DrawerListAdapter extends ArrayAdapter<DrawerListData> {
+public class DrawerListAdapter extends BaseAdapter {
     private Context context;
-    private int layoutResourceId;
     private ArrayList<DrawerListData> drawerListData;
 
-    public DrawerListAdapter(Context context, int layoutResourceId, ArrayList<DrawerListData> drawerListData) {
-        super(context, layoutResourceId, drawerListData);
+    public DrawerListAdapter(Context context, ArrayList<DrawerListData> drawerListData) {
         this.context = context;
-        this.layoutResourceId = layoutResourceId;
         this.drawerListData = drawerListData;
     }
 
     @Override
+    public int getCount() {
+        return drawerListData.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return drawerListData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if(view == null){
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            view = inflater.inflate(layoutResourceId, parent, false);
-        }
-        TextView itemTitle = (TextView) view.findViewById(R.id.drawer_menu_title);
+
+       if(convertView == null){
+           LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+           convertView = inflater.inflate(R.layout.drawer_list, null);
+       }
+
+        ImageView itemIcon = (ImageView) convertView.findViewById(R.id.drawer_menu_image);
+        TextView itemTitle = (TextView) convertView.findViewById(R.id.drawer_menu_title);
+        itemIcon.setImageResource(drawerListData.get(position).getIcon());
         itemTitle.setText(drawerListData.get(position).getListTitle());
 
-        ImageView itemImage = (ImageView) view.findViewById(R.id.drawer_menu_image);
-        int imageId = drawerListData.get(position).getImageId();
-        itemImage.setImageResource(imageId);
-        return view;
+        return convertView;
     }
 }
