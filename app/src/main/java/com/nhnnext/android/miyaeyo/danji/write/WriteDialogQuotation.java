@@ -107,10 +107,7 @@ public class WriteDialogQuotation extends Activity{
                 startActivityForResult(intent, RESULT_OK);
                 break;
             case R.id.add_button:
-                ArrayList<DialogWriteData>  dialogWriteData= new ArrayList<DialogWriteData>();
-                ListView listView = (ListView)findViewById(R.id.dialog_listview);
-                DialogWriteFormAdapter dialogWriteFormAdapter = new DialogWriteFormAdapter(this, R.layout.contents_list, dialogWriteData);
-                listView.setAdapter(dialogWriteFormAdapter);
+                // write_dialoge_add붙일것..
                 break;
         }
     }

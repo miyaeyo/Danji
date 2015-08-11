@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/commonColor">
+    android:layout_height="wrap_content"
+    android:background="@color/contentsBackroundColor">
     <EditText
         android:id="@+id/character"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="0.5"
         android:hint="@string/character_name"
-        android:textSize="15dp"
-        android:gravity="center"/>
+        android:textSize="15sp"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
     <EditText
         android:id="@+id/dialog"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="1"
         android:hint="@string/dialog_quotation"
-        android:gravity="center"
-        android:textSize="15dp"/>
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="15sp"/>
 </LinearLayout>
