@@ -43,7 +43,6 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="@color/drawerColor"
-        android:listSelector="@drawable/list_selector"
         android:layout_marginTop="@dimen/abc_action_bar_default_height_material"/>
 </android.support.v4.widget.DrawerLayout>
 

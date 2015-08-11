@@ -1,20 +1,26 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.app.ToolbarActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.adapter.DrawerListAdapter;
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    private ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +94,11 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_24dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.ic_face_white_24dp);
 
-
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList = (ListView)findViewById(R.id.right_drawer);
-        ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
         setDrawerList(drawerListItems);
         mDrawerList.setAdapter(new DrawerListAdapter(this, drawerListItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -106,20 +110,53 @@ public class MainActivity extends AppCompatActivity {
                 R.string.open_drawer,
                 R.string.close_drawer
         ){
-            public void onDrawerClosed(View view){
-                getSupportActionBar().setTitle(mTitle);
-            }
             public void onDrawerOpened(View drawerView){
                 getSupportActionBar().setTitle(mDrawerTitle);
+                super.onDrawerOpened(drawerView);
+            }
+            public void onDrawerClosed(View view){
+                getSupportActionBar().setTitle(mTitle);
+                super.onDrawerClosed(view);
             }
 
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        if(savedInstanceState == null){
-            selectItem(0);
-        }
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    SearchManager mSearchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+                    SearchView mSearchView = new SearchView(getApplicationContext());
+                    getSupportActionBar().setCustomView(mSearchView);
+                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_CUSTOM);
+                    mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(getComponentName()));
+                    mSearchView.setIconifiedByDefault(false);
+                    //mSearchView.setFocusable(true);
+                    //mSearchView.requestFocusFromTouch();
+                } else {
+                    getSupportActionBar().collapseActionView();
+                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_TITLE);
+                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
+
+                }
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -187,6 +224,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void selectItem(int position){
         // categrory에 해당하는 contents만 home화면에 뿌려줌
+        String selectCategory = drawerListItems.get(position).getListTitle();
+        mTabLayout.getTabAt(0).select();
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
 
