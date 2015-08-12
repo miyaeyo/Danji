@@ -2,6 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:style="http://schemas.android.com/tools"
     android:background="@color/commonColor"
     android:stretchColumns="*"
     android:orientation="horizontal"
@@ -19,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/write_movie"
-            android:backgroundTint="@color/drawerColor"
             android:background="@drawable/ic_local_movies_white_24dp"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -34,9 +34,8 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/tabColor"
-            android:backgroundTint="@color/drawerColor"
             android:background="@drawable/ic_live_tv_white_24dp"
-            android:onClick="categoryButtonClick"/>
+            android:onClick="categoryButtonClick" />
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
@@ -52,7 +51,6 @@
             android:textStyle="bold"
             android:textColor="@color/tabColor"
             android:background="@drawable/ic_book_white_24dp"
-            android:backgroundTint="@color/drawerColor"
             android:onClick="categoryButtonClick"
             android:layout_marginRight="10dp"/>
         <Button
@@ -63,7 +61,6 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/tabColor"
-            android:backgroundTint="@color/drawerColor"
             android:background="@drawable/ic_filter_vintage_white_24dp"
             android:onClick="categoryButtonClick"/>
     </TableRow>
@@ -82,7 +79,6 @@
             android:textColor="@color/tabColor"
             android:background="@drawable/ic_music_note_white_24dp"
             android:onClick="categoryButtonClick"
-            android:backgroundTint="@color/drawerColor"
             android:layout_marginRight="10dp"/>
         <Button
             android:id="@+id/write_cartoon"
@@ -93,7 +89,6 @@
             android:textStyle="bold"
             android:textColor="@color/tabColor"
             android:background="@drawable/ic_insert_emoticon_white_24dp"
-            android:backgroundTint="@color/drawerColor"
             android:onClick="categoryButtonClick"/>
     </TableRow>
 

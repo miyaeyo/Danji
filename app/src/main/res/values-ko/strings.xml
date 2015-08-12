@@ -12,4 +12,5 @@
     <string name="paragraph">내용</string>
     <string name="like">좋아요!</string>
     <string name="save">저장이 완료되었습니다.</string>
+    <string name="search_keyword">NAVER: </string>
 </resources>

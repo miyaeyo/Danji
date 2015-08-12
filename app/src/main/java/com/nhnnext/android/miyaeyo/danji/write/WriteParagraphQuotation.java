@@ -79,8 +79,7 @@ public class WriteParagraphQuotation extends Activity{
          Intent intent;
          switch (view.getId()){
              case R.id.cancel_button:
-                 intent = new Intent(this, MainActivity.class);
-                 startActivity(intent);
+                 onBackPressed();
                  break;
              case R.id.complete_button:
                  Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();

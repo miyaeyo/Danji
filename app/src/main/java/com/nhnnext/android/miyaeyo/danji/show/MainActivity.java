@@ -7,14 +7,12 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.app.ToolbarActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     getSupportActionBar().setHomeButtonEnabled(true);
 
                 }
-
-
             }
 
             @Override
@@ -262,10 +258,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void referenceSearch(View view){
-        Intent referSearchIntent = new Intent(Intent.ACTION_VIEW);
-
-    }
 
     /* Swaps fragments in the main content view */
     // selectMenu(): 하단의 Actionbar 의 메뉴에 따른 fragment연결 수행
