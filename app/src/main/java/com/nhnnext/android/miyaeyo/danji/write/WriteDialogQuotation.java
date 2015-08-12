@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -85,7 +90,7 @@ public class WriteDialogQuotation extends Activity{
     // storeTemporarily(); 작성내용 임시저장
     // takePhoto(); 카메라 연결하고 사진찍고나면 PhotoEditor호출
     // selectPhoto(); 갤러리 연결하고 사진선택하면 PhotoEditor호출
-
+    int addCount = 0;
     public void buttonClick(View view){
         Intent intent;
         switch (view.getId()){
@@ -107,7 +112,12 @@ public class WriteDialogQuotation extends Activity{
                 startActivityForResult(intent, RESULT_OK);
                 break;
             case R.id.add_button:
-                // write_dialoge_add붙일것..
+                addCount++;
+                LinearLayout writeForm = (LinearLayout)findViewById(R.id.write_form_add);
+                LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+                View addForm =inflater.inflate(R.layout.write_dialoge_add, writeForm, false);
+                writeForm.addView(addForm);
+
                 break;
         }
     }
