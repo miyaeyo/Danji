@@ -5,18 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.app.ToolbarActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -76,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         //    -> mypage: MyPageFragment
         // 3. action bar의 검색 버튼 과 검색 수행 method 연결
         //    -> searchContents() ->8/1 OnCreatOptionsMenu()안에서 구현했음
-        mTitle = mDrawerTitle = getTitle();
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -98,27 +102,27 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setAdapter(new DrawerListAdapter(this, drawerListItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                mToolbar,
-                R.string.open_drawer,
-                R.string.close_drawer
-        ){
-            public void onDrawerOpened(View drawerView){
-                getSupportActionBar().setTitle(mDrawerTitle);
-                super.onDrawerOpened(drawerView);
-            }
-            public void onDrawerClosed(View view){
-                getSupportActionBar().setTitle(mTitle);
-                super.onDrawerClosed(view);
-            }
-
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                this,
+//                mDrawerLayout,
+//                mToolbar,
+//                R.string.open_drawer,
+//                R.string.close_drawer
+//        ){
+//            public void onDrawerOpened(View drawerView){
+//                getSupportActionBar().setTitle(mDrawerTitle);
+//                super.onDrawerOpened(drawerView);
+//            }
+//            public void onDrawerClosed(View view){
+//                getSupportActionBar().setTitle(mTitle);
+//                super.onDrawerClosed(view);
+//            }
+//
+//        };
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,18 +136,25 @@ public class MainActivity extends AppCompatActivity {
                 if (position == 1) {
                     SearchManager mSearchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
                     SearchView mSearchView = new SearchView(getApplicationContext());
-                    getSupportActionBar().setCustomView(mSearchView);
+                    try{
+                        getSupportActionBar().setCustomView(mSearchView);
+                    }catch (NullPointerException e){
+                        Log.e("ERROR", "ERROR: " + e);
+                    }
+
                     getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_CUSTOM);
                     mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(getComponentName()));
                     mSearchView.setIconifiedByDefault(false);
                     //mSearchView.setFocusable(true);
                     //mSearchView.requestFocusFromTouch();
                 } else {
+
                     getSupportActionBar().collapseActionView();
                     getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_TITLE);
-                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    getSupportActionBar().setHomeButtonEnabled(true);
+
+                    //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+                    //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    //getSupportActionBar().setHomeButtonEnabled(true);
 
                 }
             }
@@ -193,24 +204,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mDrawerToggle.onOptionsItemSelected(item)){
+        if(item.getItemId() == R.id.drawer_button){
+            mDrawerLayout.openDrawer(Gravity.RIGHT);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        mDrawerToggle.onConfigurationChanged(newConfig);
+//    }
+//
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//        mDrawerToggle.syncState();
+//    }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
         @Override
@@ -247,11 +259,11 @@ public class MainActivity extends AppCompatActivity {
     public void categoryButtonClick(View view){
 
         switch(view.getId()){
-            case R.id.write_movie:case R.id.write_drama:
+            case R.id.write_movie:case R.id.write_drama:case R.id.write_cartoon:
                 Intent dialogIntent = new Intent(this, WriteDialogQuotation.class);
                 startActivity(dialogIntent);
                 break;
-            case R.id.write_book:case R.id.write_poem:case R.id.write_music:case R.id.write_cartoon:
+            case R.id.write_book:case R.id.write_poem:case R.id.write_music:
                 Intent paraIntent = new Intent(this, WriteParagraphQuotation.class);
                 startActivity(paraIntent);
                 break;

@@ -31,4 +31,10 @@
     <string name="desc_list_item_icon">Item icon</string>
     <string name="search_keyword">NAVER:\ </string>
     <string name="clear_btn">CANCEL</string>
+    <string name="own_danji">\'s DANJI</string>
+    <string name="my_wall">Wall</string>
+    <string name="my_inbox">Inbox</string>
+    <string name="photo_edit">PHOTO</string>
+    <string name="previous_window">PRE</string>
+    <string name="crop_button">CROP</string>
 </resources>
