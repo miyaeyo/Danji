@@ -37,4 +37,10 @@
     <string name="photo_edit">PHOTO</string>
     <string name="previous_window">PRE</string>
     <string name="crop_button">CROP</string>
+    <string name="popular_contents_rank">Popular contents rank</string>
+    <string name="subscription_rank">You can search contents in DANJI</string>
+    <string name="result_canceled">Canceled the image capture</string>
+    <string name="result_failed">Failed the image capture</string>
+    <string name="photo_load_fail">Failed the image load</string>
+
 </resources>

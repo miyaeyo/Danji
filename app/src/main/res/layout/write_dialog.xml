@@ -109,6 +109,7 @@
             android:layout_gravity="bottom"
             android:background="@color/commonColor">
             <ImageView
+                android:id="@+id/dialog_imageview"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"

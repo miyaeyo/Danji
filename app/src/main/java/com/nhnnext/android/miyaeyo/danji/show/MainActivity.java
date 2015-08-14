@@ -3,12 +3,9 @@ package com.nhnnext.android.miyaeyo.danji.show;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // 2. 하단에 Action bar로 home, search, write, mypage 버튼 구성 및 eventㅣistener로 각 fragment로 연결
         //    -> selectMenu() -> 8/1 setupViewPager()로 구현했음
         //    -> home : ContentsViewFragment
-        //    -> search: before search; BeforeSearchFragment, after search; ContentsViewFragment, action bar 검색어 입력 모드로 연결
+        //    -> search: before search; ContentsSearchFragment, after search; ContentsViewFragment, action bar 검색어 입력 모드로 연결
         //    -> write: WriteCategoryFragment
         //    -> mypage: MyPageFragment
         // 3. action bar의 검색 버튼 과 검색 수행 method 연결
@@ -241,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ContentsViewFragment(), "home");
-        adapter.addFragment(new BeforeSearchFragment(), "before search");
+        adapter.addFragment(new ContentsSearchFragment(), "before search");
         adapter.addFragment(new WriteCategoryFragment(), "write");
         adapter.addFragment(new MyPageFragment(), "mypage");
         viewPager.setAdapter(adapter);

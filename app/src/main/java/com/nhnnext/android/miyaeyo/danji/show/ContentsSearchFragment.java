@@ -14,7 +14,7 @@ import com.nhnnext.android.miyaeyo.danji.R;
  * category별 contents갯수를 표시하는 창
  * 각 버튼 클릭하면 ContentsViewFragment에 해당 category의 contents만 보여줌
  */
-public class BeforeSearchFragment extends Fragment{
+public class ContentsSearchFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -28,7 +28,7 @@ public class BeforeSearchFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.before_search_f, null);
+        return inflater.inflate(R.layout.contents_search_f, null);
     }
 
     @Override

@@ -2,7 +2,13 @@ package com.nhnnext.android.miyaeyo.danji.write;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,6 +25,7 @@ import android.widget.Toast;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.adapter.DialogWriteFormAdapter;
 import com.nhnnext.android.miyaeyo.danji.data.DialogWriteData;
+import com.nhnnext.android.miyaeyo.danji.edit.PhotoEditor;
 import com.nhnnext.android.miyaeyo.danji.show.MainActivity;
 
 import java.util.ArrayList;
@@ -90,25 +98,28 @@ public class WriteDialogQuotation extends Activity{
     // storeTemporarily(); 작성내용 임시저장
     // takePhoto(); 카메라 연결하고 사진찍고나면 PhotoEditor호출
     // selectPhoto(); 갤러리 연결하고 사진선택하면 PhotoEditor호출
-    int addCount = 0;
+    private int addCount = 0;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     public void buttonClick(View view){
-        Intent intent;
+
         switch (view.getId()){
             case R.id.cancel_button:
                 onBackPressed();
                 break;
             case R.id.complete_button:
-                Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();
+                Intent completeIntent = new Intent(this, MainActivity.class);
+                startActivity(completeIntent);
                 break;
             case R.id.camera:
-                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 100);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(cameraIntent.resolveActivity(getPackageManager()) != null){
+                    startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
                 break;
             case R.id.gallery:
-                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, RESULT_OK);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_OK);
                 break;
             case R.id.add_button:
                 addCount++;
@@ -121,4 +132,27 @@ public class WriteDialogQuotation extends Activity{
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try{
+            if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
+                if(resultCode == RESULT_OK){
+                    Bundle extras = data.getExtras();
+                    Bitmap photo = (Bitmap) extras.get("data");
+                    Intent editPhotoIntent = new Intent(this, PhotoEditor.class);
+                    editPhotoIntent.putExtra("photo",photo);
+                    startActivity(editPhotoIntent);
+                } else if (resultCode == RESULT_CANCELED){
+                    Toast.makeText(this, R.string.result_canceled,Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, R.string.result_failed,Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+        }catch (Exception e){
+            Log.d("EEE", "exception");
+        }
+    }
 }
