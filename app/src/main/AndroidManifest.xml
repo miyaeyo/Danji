@@ -6,6 +6,7 @@
     <!-- Min/target SDK versions (<uses-sdk>) and versionCode/Name managed by build.gradle -->
     <!--사용 device의 갤러리 접근-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--인터넷 연결-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--사용 device의 카메라 접근-->

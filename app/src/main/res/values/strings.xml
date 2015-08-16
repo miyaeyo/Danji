@@ -42,5 +42,7 @@
     <string name="result_canceled">Canceled the image capture</string>
     <string name="result_failed">Failed the image capture</string>
     <string name="photo_load_fail">Failed the image load</string>
+    <string name="album_name">DANJI</string>
+
 
 </resources>

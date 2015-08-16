@@ -5,30 +5,33 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.R;
-import com.nhnnext.android.miyaeyo.danji.adapter.DialogWriteFormAdapter;
-import com.nhnnext.android.miyaeyo.danji.data.DialogWriteData;
 import com.nhnnext.android.miyaeyo.danji.edit.PhotoEditor;
 import com.nhnnext.android.miyaeyo.danji.show.MainActivity;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /** To do
  * 1. Action bar의 취소 버튼 누르면 작성을 종료 하겠냐는 팝업 창 띄우고 확인 누르면 MainActivity로 돌아가고 취소버튼 누르면 작성창 그대
@@ -38,6 +41,8 @@ import java.util.ArrayList;
  * 5. 갤러리 버튼 누르면 갤러리를 연결하고 사진을 선택하면 PhotoEditor로 연결
  */
 public class WriteDialogQuotation extends Activity{
+    private String mCurrentPhotoPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +104,8 @@ public class WriteDialogQuotation extends Activity{
     // takePhoto(); 카메라 연결하고 사진찍고나면 PhotoEditor호출
     // selectPhoto(); 갤러리 연결하고 사진선택하면 PhotoEditor호출
     private int addCount = 0;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int CAPTURE_IMAGE_FROM_CAMERA = 100;
+    private static final int LOAD_IMAGE_FROM_GALLERY=200;
     public void buttonClick(View view){
 
         switch (view.getId()){
@@ -112,14 +118,18 @@ public class WriteDialogQuotation extends Activity{
                 startActivity(completeIntent);
                 break;
             case R.id.camera:
+               // takePictureIntent();
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(cameraIntent.resolveActivity(getPackageManager()) != null){
-                    startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                    startActivityForResult(cameraIntent, CAPTURE_IMAGE_FROM_CAMERA);
                 }
                 break;
             case R.id.gallery:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_OK);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //galleryIntent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                //galleryIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                galleryIntent.setType("image/*");
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select File"), LOAD_IMAGE_FROM_GALLERY);
                 break;
             case R.id.add_button:
                 addCount++;
@@ -132,27 +142,105 @@ public class WriteDialogQuotation extends Activity{
         }
     }
 
+//    private void takePictureIntent(){
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//        if (intent.resolveActivity(getPackageManager()) != null){
+//            File photoFile;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                photoFile = null;
+//                mCurrentPhotoPath = null;
+//            }
+//            if (photoFile != null) {
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                        Uri.fromFile(photoFile));
+//                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+//            }
+//
+//        }
+//    }
+//
+//    private File createImageFile() throws IOException {
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(new Date());
+//        String imageFileName = "JPEG_" + timeStamp + "_";
+//        File storageDir = Environment.getExternalStoragePublicDirectory(
+//                Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        // Save a file: path for use with ACTION_VIEW intents
+//        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+//        return image;
+//    }
+//
+//    private void galleryAddPic() {
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(mCurrentPhotoPath);
+//        Uri contentUri = Uri.fromFile(f);
+//        mediaScanIntent.setData(contentUri);
+//        this.sendBroadcast(mediaScanIntent);
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try{
-            if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
-                if(resultCode == RESULT_OK){
-                    Bundle extras = data.getExtras();
-                    Bitmap photo = (Bitmap) extras.get("data");
-                    Intent editPhotoIntent = new Intent(this, PhotoEditor.class);
-                    editPhotoIntent.putExtra("photo",photo);
-                    startActivity(editPhotoIntent);
-                } else if (resultCode == RESULT_CANCELED){
-                    Toast.makeText(this, R.string.result_canceled,Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, R.string.result_failed,Toast.LENGTH_SHORT).show();
-
+        if(resultCode == RESULT_OK){
+            if(requestCode == CAPTURE_IMAGE_FROM_CAMERA){
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                try {
+                    photo.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                    File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
+                    FileOutputStream fileOutputStream;
+                    destination.createNewFile();
+                    fileOutputStream = new FileOutputStream(destination);
+                    fileOutputStream.write(bytes.toByteArray());
+                    fileOutputStream.close();
+                } catch(Exception e){
+                    e.printStackTrace();
                 }
-            }
+                Intent intent = new Intent(this, PhotoEditor.class);
+                intent.putExtra("photo", photo);
+                startActivity(intent);
+            } else if(requestCode == LOAD_IMAGE_FROM_GALLERY){
+                Uri currentImageUri = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(currentImageUri, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String photoPath = cursor.getString(columnIndex);
+                cursor.close();
 
-        }catch (Exception e){
-            Log.d("EEE", "exception");
+                Bitmap photo;
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(photoPath.trim(),options);
+                final int REQUIRED_SIZE = 200;
+                int scale = 1;
+                while(options.outHeight / scale / 2 >= REQUIRED_SIZE && options.outWidth / scale / 2 >= REQUIRED_SIZE){
+                    scale *= 2;
+                }
+
+                options.inSampleSize = scale;
+                options.inJustDecodeBounds = false;
+                photo = BitmapFactory.decodeFile(photoPath.trim(), options);
+
+                Intent intent = new Intent(this, PhotoEditor.class);
+                intent.putExtra("photo", photo);
+                startActivity(intent);
+
+            }
+        }else if (resultCode == RESULT_CANCELED){
+            Toast.makeText(this, R.string.result_canceled,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.result_failed,Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

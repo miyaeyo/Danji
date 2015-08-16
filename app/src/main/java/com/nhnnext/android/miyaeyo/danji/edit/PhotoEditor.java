@@ -5,6 +5,7 @@ package com.nhnnext.android.miyaeyo.danji.edit;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.os.Bundle;
+        import android.util.Log;
         import android.view.View;
         import android.widget.ImageView;
         import android.widget.Toast;
@@ -21,14 +22,12 @@ package com.nhnnext.android.miyaeyo.danji.edit;
  * 4. 하단 Action bar 회전 버튼 누르면 사진 회전
  */
 public class PhotoEditor extends Activity {
+    private String mCurrentPhotoPath;
+    ImageView mImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_photo);
-        //1. Action bar 이전 버튼 popup window로 연결 (popup window의 확인 버튼 -> 이전 작성 창, 취소 버튼 -> 사진 편집창)
-        //2. Action bar 완료 버튼 completeEdit() 연결
-        //3. Action bar 자르기 버튼 cropPhoto() 연결
-        //4. Action bar 회전 버튼 rotatePhoto()
+
     }
 
     @Override
@@ -39,12 +38,20 @@ public class PhotoEditor extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ImageView mImageView = (ImageView)findViewById(R.id.photo_load_location);
+        setContentView(R.layout.edit_photo);
+        //1. Action bar 이전 버튼 popup window로 연결 (popup window의 확인 버튼 -> 이전 작성 창, 취소 버튼 -> 사진 편집창)
+        //2. Action bar 완료 버튼 completeEdit() 연결
+        //3. Action bar 자르기 버튼 cropPhoto() 연결
+        //4. Action bar 회전 버튼 rotatePhoto()
+        mImageView = (ImageView)findViewById(R.id.photo_load_location);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if(bundle != null){
-            Bitmap photo = (Bitmap) bundle.get("photo");
+//            mCurrentPhotoPath = (String) bundle.get("photo_path");
+//            setPic();
+            Bitmap photo = (Bitmap)bundle.get("photo");
             mImageView.setImageBitmap(photo);
+
         } else {
             Toast.makeText(this, R.string.photo_load_fail,Toast.LENGTH_SHORT).show();
         }
@@ -78,6 +85,36 @@ public class PhotoEditor extends Activity {
                 break;
         }
     }
+
+//    private void setPic() {
+//        // Get the dimensions of the View
+//        mImageView.measure(View.MeasureSpec.EXACTLY, View.MeasureSpec.EXACTLY);
+//        int targetW = mImageView.getMeasuredWidth();
+//        int targetH = mImageView.getMeasuredHeight();
+//        Log.d("EEE", "target H"+targetH+" W "+targetW);
+//
+//        // Get the dimensions of the bitmap
+//        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+//        bmOptions.inJustDecodeBounds = true;
+//        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+//
+//        int photoW = bmOptions.outWidth;
+//        int photoH = bmOptions.outHeight;
+//        Log.d("EEE", "photo H"+photoH+" w "+photoW);
+//
+//
+//        // Determine how much to scale down the image
+//        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+//        Log.d("EEE", "scaleFactor"+scaleFactor);
+//
+//        // Decode the image file into a Bitmap sized to fill the View
+//        bmOptions.inJustDecodeBounds = false;
+//        bmOptions.inSampleSize = scaleFactor;
+//        bmOptions.inPurgeable = true;
+//
+//        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+//        mImageView.setImageBitmap(bitmap);
+//    }
 
 
     /*method*/
