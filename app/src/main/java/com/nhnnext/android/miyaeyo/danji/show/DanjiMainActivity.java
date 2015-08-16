@@ -52,7 +52,7 @@ import java.util.ArrayList;
  */
 
 
-public class MainActivity extends AppCompatActivity {
+public class DanjiMainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;

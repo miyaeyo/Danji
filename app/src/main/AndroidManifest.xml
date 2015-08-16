@@ -45,6 +45,34 @@
         android:theme="@style/AppTheme"
         android:uiOptions="none">
 
+        <!--Activity4-->
+        <!--Activity2,3에서 사진을 load할 때 뜨는 화면-->
+        <activity
+            android:name=".login.Login"
+            android:allowTaskReparenting="false"
+            android:alwaysRetainTaskState="false"
+            android:autoRemoveFromRecents="false"
+            android:clearTaskOnLaunch="false"
+            android:documentLaunchMode="none"
+            android:enabled="true"
+            android:excludeFromRecents="false"
+            android:exported="true"
+            android:finishOnTaskLaunch="false"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTop"
+            android:multiprocess="false"
+            android:noHistory="false"
+            android:relinquishTaskIdentity="false"
+            android:screenOrientation="unspecified"
+            android:stateNotNeeded="false"
+            android:uiOptions="none"
+            android:windowSoftInputMode="stateUnspecified">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!--Activity 1-->
         <!--menu button 4개(home, search, write, my page) 각각의 button을 누를 때 전환되는 화면 fragment로 구성-->
         <!--화면 상단의 menu버튼 누르면 navigation bar가 나오고 해당 category click시 fragment1에 contents 뿌려줌-->
@@ -53,7 +81,7 @@
         <!--fragment3: Write 화면, category를 고르는 화면->Activity3 or Activity4로 연결됨-->
         <!--fragment4: Mypage 화면, 내가 쓴글, 스크랩해온 글을 볼 수 있는 화면-->
         <activity
-            android:name=".show.MainActivity"
+            android:name=".show.DanjiMainActivity"
             android:allowTaskReparenting="false"
             android:alwaysRetainTaskState="false"
             android:autoRemoveFromRecents="false"
@@ -74,8 +102,8 @@
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="stateUnspecified">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.nhnnext.android.action.miyaeyo.danji.DANJI_MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <meta-data
                 android:name="android.app.searchable"
@@ -134,34 +162,6 @@
             android:windowSoftInputMode="stateUnspecified">
             <intent-filter>
                 <action android:name="com.nhnnext.android.miyaeyo.danji.WRITE_PARAGRAPH"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <!--Activity4-->
-        <!--Activity2,3에서 사진을 load할 때 뜨는 화면-->
-        <activity
-            android:name=".edit.PhotoEditor"
-            android:allowTaskReparenting="false"
-            android:alwaysRetainTaskState="false"
-            android:autoRemoveFromRecents="false"
-            android:clearTaskOnLaunch="false"
-            android:documentLaunchMode="none"
-            android:enabled="true"
-            android:excludeFromRecents="false"
-            android:exported="true"
-            android:finishOnTaskLaunch="false"
-            android:hardwareAccelerated="false"
-            android:launchMode="singleTop"
-            android:multiprocess="false"
-            android:noHistory="false"
-            android:relinquishTaskIdentity="false"
-            android:screenOrientation="unspecified"
-            android:stateNotNeeded="false"
-            android:uiOptions="none"
-            android:windowSoftInputMode="stateUnspecified">
-            <intent-filter>
-                <action android:name="com.nhnnext.android.action.miyaeyo.danji.EDIT_PHOTO"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
