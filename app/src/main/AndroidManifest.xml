@@ -32,6 +32,7 @@
         android:anyDensity="true"/>
     <!--compatible screens는 일단은 모든 screen size에 대응을 목표로하고 나중에 대응이 힘든부분이 있을 경우 지원 screen을 명시하여 대응이 힘든 크기와 해상도의 screen을 제외 하겠음-->
     <application
+        android:name=".MyApplication"
         android:allowTaskReparenting="false"
         android:allowBackup="true"
         android:enabled="true"
@@ -44,6 +45,13 @@
         android:restoreAnyVersion="false"
         android:theme="@style/AppTheme"
         android:uiOptions="none">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
 
         <!--Activity4-->
         <!--Activity2,3에서 사진을 load할 때 뜨는 화면-->
