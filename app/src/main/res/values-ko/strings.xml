@@ -18,4 +18,5 @@
     <string name="crop_button">자르기</string>
     <string name="popular_contents_rank">인기 컨텐츠 순위</string>
     <string name="subscription_rank">DANJI의 컨텐츠를 검색해 보세요</string>
+    <string name='logging_in'>로그인 중입니다...</string>
 </resources>

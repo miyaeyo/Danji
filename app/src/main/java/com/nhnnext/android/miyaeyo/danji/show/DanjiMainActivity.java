@@ -161,6 +161,7 @@ public class DanjiMainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -265,10 +266,4 @@ public class DanjiMainActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-    /* Swaps fragments in the main content view */
-    // selectMenu(): 하단의 Actionbar 의 메뉴에 따른 fragment연결 수행
-    // selectCategory(): navigation drawer의 category에 따라 DB에서 해당 category data불러와서 fragment1에 연결
-    // searchContents(): 검색버튼이 눌렸을 때 DB에서 해당 검색어를 포함하는 contents를 가져옴
 }

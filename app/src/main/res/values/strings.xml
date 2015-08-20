@@ -31,7 +31,7 @@
     <string name="desc_list_item_icon">Item icon</string>
     <string name="search_keyword">NAVER:\ </string>
     <string name="clear_btn">CANCEL</string>
-    <string name="own_danji">MY DANJI</string>
+    <string name="own_danji">\'s DANJI</string>
     <string name="my_wall">Wall</string>
     <string name="my_inbox">Inbox</string>
     <string name="photo_edit">PHOTO</string>
@@ -44,7 +44,18 @@
     <string name="photo_load_fail">Failed the image load</string>
     <string name="album_name">DANJI</string>
     <string name="facebook_app_id">1022488864458596</string>
-    <string name="start_danji">START!</string>
+    <string name="welcome">WELCOME</string>
+    <string name="hi">:)</string>
+    <string name='logging_in'>Logging in ...</string>
+    <string name='parse_app_id'>9bsJRraxnOoVjbhqsCjA35Gb4OMc29jzwcuZCKRq</string>
+    <string name='parse_client_key'>A3ydVgCH2c8QKwLUEmUS36fMprzVingTwDuMVyGb</string>
+    <string name='signup'>SIGNUP</string>
+    <string name='login'>LOGIN</string>
+    <string name='logout'>LOGOUT</string>
+    <string name='user_name'>USER NAME</string>
+    <string name='password'>PASSWORD</string>
+    <string name="start_danji">START DANJI</string>
+
 
 
 </resources>

@@ -1,16 +1,15 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.parse.ParseUser;
 
 /**To do
  * 내가 쓴글만 모아서 보여줌. 이걸 위해서는 로그인이 필요해서 소셜 로그인을 붙일 예정..
@@ -35,6 +34,7 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ParseUser currentUser = ParseUser.getCurrentUser();
     }
 
     @Override

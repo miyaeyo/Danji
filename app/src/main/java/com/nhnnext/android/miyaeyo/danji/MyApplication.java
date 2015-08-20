@@ -1,35 +1,27 @@
 package com.nhnnext.android.miyaeyo.danji;
 
 import android.app.Application;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.util.Base64;
-import android.util.Log;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseUser;
 
 /**
  * Created by miyaeyo on 2015. 8. 17..
  */
 public class MyApplication extends Application{
+
+    public static final String TAG = "DANJI";
+
     @Override
     public void onCreate() {
         super.onCreate();
-        try{
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.nhnnext.android.miyaeyo.danji",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("DANJIKey", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        }catch (PackageManager.NameNotFoundException e) {
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "9bsJRraxnOoVjbhqsCjA35Gb4OMc29jzwcuZCKRq", "A3ydVgCH2c8QKwLUEmUS36fMprzVingTwDuMVyGb");
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultAcl = new ParseACL();
+        defaultAcl.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultAcl, true);
 
-        } catch (NoSuchAlgorithmException e) {
-
-        }
     }
 }
