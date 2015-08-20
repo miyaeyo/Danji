@@ -183,8 +183,8 @@ public class WriteDialogQuotation extends Activity {
         //set crop properties
         cropIntent.putExtra("crop", "true");
         //indicate aspect of desired crop
-        cropIntent.putExtra("aspectX", 1);
-        cropIntent.putExtra("aspectY", 1);
+        cropIntent.putExtra("aspectX", 4);
+        cropIntent.putExtra("aspectY", 3);
         //indicate output X and Y
         cropIntent.putExtra("outputX", 256);
         cropIntent.putExtra("outputY", 256);

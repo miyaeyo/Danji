@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.parse.ParseUser;
@@ -15,6 +16,7 @@ import com.parse.ParseUser;
  * 내가 쓴글만 모아서 보여줌. 이걸 위해서는 로그인이 필요해서 소셜 로그인을 붙일 예정..
  */
 public class MyPageFragment extends Fragment {
+    TextView danjiUserName;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -35,6 +37,8 @@ public class MyPageFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ParseUser currentUser = ParseUser.getCurrentUser();
+        danjiUserName = (TextView)getActivity().findViewById(R.id.danji_user_name);
+        danjiUserName.setText(currentUser.getUsername());
     }
 
     @Override

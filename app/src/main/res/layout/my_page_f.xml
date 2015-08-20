@@ -17,7 +17,8 @@
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="end">
                 <TextView
                     android:id="@+id/danji_user_name"
                     android:layout_width="wrap_content"
@@ -36,9 +37,8 @@
 
             <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp">
+                android:layout_height="match_parent"
+                android:gravity="bottom">
                 <TableRow
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
