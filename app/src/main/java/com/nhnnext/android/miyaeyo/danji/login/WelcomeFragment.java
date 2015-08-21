@@ -2,6 +2,7 @@ package com.nhnnext.android.miyaeyo.danji.login;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,7 +54,10 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                getActivity().finish();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                BeforeLoginFragment beforeLoginFragment = new BeforeLoginFragment();
+                fragmentTransaction.replace(R.id.login_container, beforeLoginFragment);
+                fragmentTransaction.commit();
             }
         });
 

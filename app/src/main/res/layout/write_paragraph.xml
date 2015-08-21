@@ -54,7 +54,7 @@
             android:paddingRight="10dp"
             android:textSize="15sp"/>
         <EditText
-            android:id="@+id/creator"
+            android:id="@+id/write_creator"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:hint="@string/creator"
@@ -64,16 +64,16 @@
             android:background="@color/commonColor"
             android:textSize="15sp"/>
         <EditText
-            android:id="@+id/paragraph"
+            android:id="@+id/write_paragraph"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="400dp"
             android:hint="@string/paragraph"
             android:gravity="start"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:background="@color/contentsBackroundColor"
+            android:scrollbars="vertical"
             android:textSize="15sp"/>
 
         <LinearLayout

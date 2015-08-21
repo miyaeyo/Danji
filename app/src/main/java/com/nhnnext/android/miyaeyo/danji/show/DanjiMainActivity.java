@@ -253,17 +253,5 @@ public class DanjiMainActivity extends AppCompatActivity {
         itemIcon.recycle();
     }
 
-    public void categoryButtonClick(View view){
 
-        switch(view.getId()){
-            case R.id.write_movie:case R.id.write_drama:case R.id.write_cartoon:
-                Intent dialogIntent = new Intent(this, WriteDialogQuotation.class);
-                startActivity(dialogIntent);
-                break;
-            case R.id.write_book:case R.id.write_poem:case R.id.write_music:
-                Intent paraIntent = new Intent(this, WriteParagraphQuotation.class);
-                startActivity(paraIntent);
-                break;
-        }
-    }
 }

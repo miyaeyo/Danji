@@ -72,11 +72,4 @@ public class Login extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
-
-    private void startDanji(){
-        Intent intent = new Intent(this, DanjiMainActivity.class);
-        startActivity(intent);
-
-    }
-
 }

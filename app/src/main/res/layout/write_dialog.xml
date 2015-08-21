@@ -49,10 +49,20 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <EditText
-                android:id="@+id/write_title"
+                android:id="@+id/write_title_d"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:hint="@string/write_title"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@color/contentsBackroundColor"
+                android:textSize="15sp"/>
+            <EditText
+                android:id="@+id/write_creator_d"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="@string/creator"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -65,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/contentsBackroundColor">
                 <EditText
-                    android:id="@+id/character"
+                    android:id="@+id/write_character_d"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="0.5"
@@ -75,7 +85,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"/>
                 <EditText
-                    android:id="@+id/dialog"
+                    android:id="@+id/write_dialog_d"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"

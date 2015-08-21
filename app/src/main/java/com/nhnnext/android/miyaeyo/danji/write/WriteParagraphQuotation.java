@@ -7,15 +7,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.nhnnext.android.miyaeyo.danji.data.Danji;
 import com.nhnnext.android.miyaeyo.danji.show.DanjiMainActivity;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,6 +42,19 @@ public class WriteParagraphQuotation extends Activity{
     private ImageView mImageView;
     private String mCurrentPhotoPath;
     private Uri contentUri;
+    private ParseUser currentUser;
+    private String category;
+    private String userName;
+    private ParseFile contentsImage;
+    private String bodyText;
+    private EditText body;
+    private int likeCount;
+    private String createrText;
+    private EditText creater;
+    private String titleText;
+    private EditText title;
+    private Danji danji;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +65,18 @@ public class WriteParagraphQuotation extends Activity{
         //4. 갤러리 버튼 누르면 selectPhoto() 연결
         mCurrentPhotoPath = null;
         mImageView = (ImageView) findViewById(R.id.paragraph_imageview);
+        danji = new Danji();
+        currentUser = ParseUser.getCurrentUser();
+        userName = currentUser.getUsername();
+        danji.setUserName(userName);
+        category = getIntent().getStringExtra("category");
+        danji.setCategory(category);
+        body = (EditText)findViewById(R.id.write_paragraph);
+        creater = (EditText)findViewById(R.id.write_creator);
+        title = (EditText)findViewById(R.id.write_title);
+
+
+
     }
 
     @Override
@@ -58,6 +90,9 @@ public class WriteParagraphQuotation extends Activity{
     protected void onResume() {
         super.onResume();
         // popup window가 떴다가 다시 돌아왔을 때 작성내용 남아 있어야 한다.
+        bodyText = body.getText().toString();
+        createrText = creater.getText().toString();
+        titleText = title.getText().toString();
     }
 
     @Override
@@ -93,9 +128,14 @@ public class WriteParagraphQuotation extends Activity{
         Intent intent;
         switch (view.getId()){
             case R.id.cancel_button:
-                 onBackPressed();
-                 break;
+                onBackPressed();
+                break;
             case R.id.complete_button:
+                 danji.setContentsBody(bodyText);
+                 danji.setContentsTitle(titleText);
+                 danji.setCreator(createrText);
+                 Log.d(MyApplication.TAG, "body" + bodyText + "\ntitle" + titleText + "\ncreater" + createrText);
+                 danji.saveInBackground();
                  Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
                  intent = new Intent(this, DanjiMainActivity.class);
                  startActivity(intent);
@@ -158,6 +198,12 @@ public class WriteParagraphQuotation extends Activity{
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         Bitmap bitmap = (Bitmap) extras.get("data");
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] image = stream.toByteArray();
+                        contentsImage = new ParseFile("contentsImage", image);
+                        contentsImage.saveInBackground();
+                        danji.setContentsImage(contentsImage);
                         mImageView.setImageBitmap(bitmap);
                         if (mCurrentPhotoPath != null) {
                             File f = new File(mCurrentPhotoPath);
@@ -185,8 +231,8 @@ public class WriteParagraphQuotation extends Activity{
         cropIntent.putExtra("aspectX", 4);
         cropIntent.putExtra("aspectY", 3);
         //indicate output X and Y
-        cropIntent.putExtra("outputX", 256);
-        cropIntent.putExtra("outputY", 256);
+        cropIntent.putExtra("outputX", 256*4);
+        cropIntent.putExtra("outputY", 256*3);
         //retrieve data on return
         cropIntent.putExtra("return-data", true);
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
