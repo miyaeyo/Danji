@@ -3,19 +3,30 @@ package com.nhnnext.android.miyaeyo.danji.write;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.R;
+import com.nhnnext.android.miyaeyo.danji.data.Danji;
+import com.nhnnext.android.miyaeyo.danji.data.DialogPart;
 import com.nhnnext.android.miyaeyo.danji.show.DanjiMainActivity;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -37,6 +48,26 @@ public class WriteDialogQuotation extends Activity {
     private String mCurrentPhotoPath;
     private Uri contentUri;
     private int addCount = 0;
+    private ParseUser currentUser;
+    private String category;
+    private String userName;
+    private ParseFile contentsImage;
+    private String bodyText;
+    private int likeCount;
+    private String createrText;
+    private EditText creater;
+    private String titleText;
+    private EditText title;
+    private Danji danji;
+    private EditText character;
+    private EditText dialog;
+    private String characterText;
+    private String dialogText;
+    private DialogPart dialogPart;
+    private EditText addCharacter;
+    private EditText addDialog;
+    private String addCharactertxt;
+    private String addDialogtxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +75,21 @@ public class WriteDialogQuotation extends Activity {
         setContentView(R.layout.write_dialog);
         mCurrentPhotoPath = null;
         mImageView = (ImageView) findViewById(R.id.dialog_imageview);
+
+        title = (EditText)findViewById(R.id.write_title_d);
+        creater = (EditText)findViewById(R.id.write_creator_d);
+        character = (EditText)findViewById(R.id.write_character_d);
+        dialog = (EditText)findViewById(R.id.write_dialog_d);
+
+        danji = new Danji();
+        currentUser = ParseUser.getCurrentUser();
+        userName = currentUser.getUsername();
+        danji.setUserName(userName);
+        category = getIntent().getStringExtra("category");
+        danji.setCategory(category);
+
+
+
 
     }
 
@@ -58,6 +104,7 @@ public class WriteDialogQuotation extends Activity {
     protected void onResume() {
         super.onResume();
         // popup window가 떴다가 다시 돌아왔을 때 작성내용 남아 있어야 한다.
+
     }
 
     @Override
@@ -87,6 +134,32 @@ public class WriteDialogQuotation extends Activity {
                 break;
             case R.id.complete_button:
                 Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();
+                createrText = creater.getText().toString();
+                danji.setCreator(createrText);
+                titleText = title.getText().toString();
+                danji.setContentsTitle(titleText);
+
+                characterText = character.getText().toString();
+                dialogText = dialog.getText().toString();
+                if(characterText.equals("")){
+                    bodyText = dialogText;
+                } else {
+                    bodyText = characterText+": "+dialogText+"\n";
+                }
+
+                if(addCount != 0){
+                    for(int i = 0; i < addCount; i++){
+                        addCharacter = (EditText)findViewById(100+i);
+                        addDialog = (EditText)findViewById(200+i);
+                        addCharactertxt = addCharacter.getText().toString();
+                        addDialogtxt = addDialog.getText().toString();
+                        bodyText = bodyText+addCharactertxt+": "+addDialogtxt+"\n";
+                    }
+                }
+
+                danji.setContentsBody(bodyText);
+                danji.saveInBackground();
+
                 Intent completeIntent = new Intent(this, DanjiMainActivity.class);
                 startActivity(completeIntent);
                 break;
@@ -100,12 +173,59 @@ public class WriteDialogQuotation extends Activity {
             case R.id.add_button:
                 addCount++;
                 LinearLayout writeForm = (LinearLayout) findViewById(R.id.write_form_add);
-                LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-                View addForm = inflater.inflate(R.layout.write_dialoge_add, writeForm, false);
-                writeForm.addView(addForm);
+                LinearLayout writeFormUnit = new LinearLayout(this);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                writeFormUnit.setLayoutParams(params);
+                writeFormUnit.setOrientation(LinearLayout.HORIZONTAL);
+                writeFormUnit.setBackgroundColor(getResources().getColor(R.color.contentsBackroundColor));
+                writeFormUnit.addView(makeCharacterForm(100 + addCount - 1));
+                writeFormUnit.addView(makeDialogForm(200 + addCount - 1));
+                writeForm.addView(writeFormUnit);
+
+//                LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+//                View addForm = inflater.inflate(R.layout.write_dialoge_add, writeForm, false);
+//                writeForm.addView(addForm);
 
                 break;
         }
+    }
+
+    private EditText makeCharacterForm(int id){
+        EditText character = new EditText(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, metrics);
+        float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
+        character.setId(id);
+        character.setWidth(width / 3);
+        character.setHeight((int)height);
+        character.setHint(getString(R.string.character_name));
+        character.setTextSize(15);
+        character.setGravity(Gravity.CENTER_VERTICAL);
+        character.setPadding((int)padding, 0, (int)padding, 0);
+        return character;
+    }
+
+    private EditText makeDialogForm(int id){
+        EditText dialog = new EditText(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, metrics);
+        float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
+        dialog.setId(id);
+        dialog.setWidth(width * 2 / 3);
+        dialog.setHeight((int)height);
+        dialog.setHint(getString(R.string.dialog_quotation));
+        dialog.setGravity(Gravity.CENTER_VERTICAL);
+        dialog.setTextSize(15);
+        dialog.setPadding((int)padding, 0, (int)padding, 0);
+        return dialog;
     }
 
     private void dispatchTakePictureIntent() {
@@ -158,6 +278,12 @@ public class WriteDialogQuotation extends Activity {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         Bitmap bitmap = (Bitmap) extras.get("data");
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] image = stream.toByteArray();
+                        contentsImage = new ParseFile("contentsImage", image);
+                        contentsImage.saveInBackground();
+                        danji.setContentsImage(contentsImage);
                         mImageView.setImageBitmap(bitmap);
                         if (mCurrentPhotoPath != null) {
                             File f = new File(mCurrentPhotoPath);
@@ -186,8 +312,8 @@ public class WriteDialogQuotation extends Activity {
         cropIntent.putExtra("aspectX", 4);
         cropIntent.putExtra("aspectY", 3);
         //indicate output X and Y
-        cropIntent.putExtra("outputX", 256);
-        cropIntent.putExtra("outputY", 256);
+        cropIntent.putExtra("outputX", 256*4);
+        cropIntent.putExtra("outputY", 256*3);
         //retrieve data on return
         cropIntent.putExtra("return-data", true);
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
