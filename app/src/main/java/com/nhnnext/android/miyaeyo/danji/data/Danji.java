@@ -61,7 +61,7 @@ public class Danji extends ParseObject{
         return getString("Creator");
     }
 
-    public String getContenstsTitle(){
+    public String getContentsTitle(){
         return getString("Title");
     }
 

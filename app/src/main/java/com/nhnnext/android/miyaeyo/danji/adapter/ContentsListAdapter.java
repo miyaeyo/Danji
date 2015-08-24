@@ -93,7 +93,7 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
                 if(e == null){
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     contentsImage.setImageBitmap(bitmap);
-                    contentsImage.setScaleType(ImageView.ScaleType.FIT_START);
+                    contentsImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 } else {
                     Log.e(MyApplication.TAG, "ParseException"+ e);
                 }

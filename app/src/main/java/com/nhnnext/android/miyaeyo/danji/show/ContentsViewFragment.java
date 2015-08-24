@@ -1,12 +1,9 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +23,6 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingFormatArgumentException;
 
 /** To do
  *  DB에서 모든 data다 받아와서 contents를 view에 맞게 뿌려줌
@@ -99,7 +95,12 @@ public class ContentsViewFragment extends Fragment {
                         Danji danji = (Danji)pObject;
                         ParseFile image = danji.getContentsImage();
                         String contentsBody = danji.getContentsBody();
-                        String contentsRefer = danji.getCreator() + ", " + danji.getContenstsTitle();
+                        String contentsRefer;
+                        if(danji.getCreator().equals("")){
+                            contentsRefer = danji.getContentsTitle();
+                        } else {
+                            contentsRefer = danji.getCreator() + ", " + danji.getContentsTitle();
+                        }
                         int likeCount = danji.getLikeCount();
                         ContentsListData contentsListData = new ContentsListData(image, contentsBody, contentsRefer, likeCount);
                         contentsListDataArray.add(contentsListData);

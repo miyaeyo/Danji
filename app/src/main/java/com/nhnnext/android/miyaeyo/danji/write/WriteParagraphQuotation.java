@@ -24,6 +24,7 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -137,6 +138,7 @@ public class WriteParagraphQuotation extends Activity{
                  Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
                  intent = new Intent(this, DanjiMainActivity.class);
                  startActivity(intent);
+                 finish();
                  break;
             case R.id.camera:
                 dispatchTakePictureIntent();
@@ -153,6 +155,8 @@ public class WriteParagraphQuotation extends Activity{
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+                mCurrentPhotoPath = photoFile.getAbsolutePath();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -176,7 +180,6 @@ public class WriteParagraphQuotation extends Activity{
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-        mCurrentPhotoPath = image.getAbsolutePath();
 
         return image;
     }
@@ -193,16 +196,25 @@ public class WriteParagraphQuotation extends Activity{
                     cropImage(contentUri);
                     break;
                 case REQUEST_IMAGE_CROP:
-                    Bundle extras = data.getExtras();
-                    if (extras != null) {
-                        Bitmap bitmap = (Bitmap) extras.get("data");
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] image = stream.toByteArray();
-                        contentsImage = new ParseFile("contentsImage", image);
-                        contentsImage.saveInBackground();
-                        danji.setContentsImage(contentsImage);
-                        mImageView.setImageBitmap(bitmap);
+                    contentUri = data.getData();
+                    //Bundle extras = data.getExtras();
+                    if (contentUri != null) {
+                        //Bitmap bitmap = (Bitmap) extras.get("data");
+                        try{
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), contentUri);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            byte[] image = stream.toByteArray();
+                            contentsImage = new ParseFile("contentsImage", image);
+                            contentsImage.saveInBackground();
+                            danji.setContentsImage(contentsImage);
+                            mImageView.setImageBitmap(bitmap);
+                        } catch (FileNotFoundException e){
+                            Log.e(MyApplication.TAG, "FileNotFoundException" + e);
+                        } catch (IOException e){
+                            Log.e(MyApplication.TAG, "IOException" + e);
+                        }
+
                         if (mCurrentPhotoPath != null) {
                             File f = new File(mCurrentPhotoPath);
                             if (f.exists()) {
@@ -229,10 +241,18 @@ public class WriteParagraphQuotation extends Activity{
         cropIntent.putExtra("aspectX", 4);
         cropIntent.putExtra("aspectY", 3);
         //indicate output X and Y
-        cropIntent.putExtra("outputX", 256*4);
-        cropIntent.putExtra("outputY", 256*3);
-        //retrieve data on return
-        cropIntent.putExtra("return-data", true);
+//        cropIntent.putExtra("outputX", 256*4);
+//        cropIntent.putExtra("outputY", 256*3);
+//        //retrieve data on return
+//        cropIntent.putExtra("return-data", true);
+        try{
+            File cropImage = createImageFile();
+            Uri cropImageUri = Uri.fromFile(cropImage);
+            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);
+            cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        } catch (IOException e){
+            Log.e(MyApplication.TAG, "IOException: " + e);
+        }
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
     }
 
