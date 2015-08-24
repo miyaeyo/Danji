@@ -48,7 +48,6 @@ public class WriteParagraphQuotation extends Activity{
     private ParseFile contentsImage;
     private String bodyText;
     private EditText body;
-    private int likeCount;
     private String createrText;
     private EditText creater;
     private String titleText;
@@ -74,8 +73,7 @@ public class WriteParagraphQuotation extends Activity{
         body = (EditText)findViewById(R.id.write_paragraph);
         creater = (EditText)findViewById(R.id.write_creator);
         title = (EditText)findViewById(R.id.write_title);
-
-
+        danji.setLikeCount(0);
 
     }
 

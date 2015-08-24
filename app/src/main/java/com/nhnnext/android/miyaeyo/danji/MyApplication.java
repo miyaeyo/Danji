@@ -24,6 +24,7 @@ public class MyApplication extends Application{
         ParseObject.registerSubclass(DialogPart.class);
         Parse.initialize(this, "9bsJRraxnOoVjbhqsCjA35Gb4OMc29jzwcuZCKRq", "A3ydVgCH2c8QKwLUEmUS36fMprzVingTwDuMVyGb");
         ParseUser.enableAutomaticUser();
+        ParseUser.enableRevocableSessionInBackground();
         ParseACL defaultAcl = new ParseACL();
         defaultAcl.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultAcl, true);

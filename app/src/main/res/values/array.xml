@@ -7,6 +7,7 @@
         <item>POEM</item>
         <item>MUSIC</item>
         <item>CARTOON</item>
+        <item>TOTAL</item>
     </string-array>
     <array name="contents_category_icon">
         <item>@drawable/ic_local_movies_white_24dp</item>
@@ -15,5 +16,6 @@
         <item>@drawable/ic_filter_vintage_white_24dp</item>
         <item>@drawable/ic_music_note_white_24dp</item>
         <item>@drawable/ic_insert_emoticon_white_24dp</item>
+        <item>@drawable/ic_view_stream_white_24dp</item>
     </array>
 </resources>

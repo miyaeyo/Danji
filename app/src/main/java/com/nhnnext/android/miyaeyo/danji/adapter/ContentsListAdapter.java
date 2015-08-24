@@ -19,9 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
 import com.nhnnext.android.miyaeyo.danji.show.SearchWebview;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +68,6 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
             }
         });
 
-
         TextView contentsBody = (TextView)convertView.findViewById(R.id.contents_body);
         TextView contentsRefer = (TextView)convertView.findViewById(R.id.contents_reference);
         contentsRefer.setOnClickListener(new View.OnClickListener() {
@@ -82,15 +85,30 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
         contentsRefer.setText(contentsListData.get(position).getContentsRefer());
         likeCount.setText(""+contentsListData.get(position).getLikeCount());
 
-        ImageView contentsImage = (ImageView)convertView.findViewById(R.id.contents_image);
-        try{
-            InputStream inputStream = context.getAssets().open(contentsListData.get(position).getContentsImage());
-            Bitmap image = BitmapFactory.decodeStream(inputStream);
-            contentsImage.setImageBitmap(image);
-            contentsImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        } catch(IOException e){
-            Log.e("ERROR", "ERROR: "+e);
-        }
+        final ImageView contentsImage = (ImageView)convertView.findViewById(R.id.contents_image);
+        ParseFile image = contentsListData.get(position).getContentsImage();
+        image.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+                if(e == null){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    contentsImage.setImageBitmap(bitmap);
+                    contentsImage.setScaleType(ImageView.ScaleType.FIT_START);
+                } else {
+                    Log.e(MyApplication.TAG, "ParseException"+ e);
+                }
+            }
+        });
+
+//        try{
+//
+//            InputStream inputStream = context.getAssets().open(contentsListData.get(position).getContentsImage());
+//            Bitmap image = BitmapFactory.decodeStream(inputStream);
+//            contentsImage.setImageBitmap(image);
+//            contentsImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//        } catch(IOException e){
+//            Log.e(MyApplication.TAG, "ERROR: "+e);
+//        }
 
         return convertView;
     }

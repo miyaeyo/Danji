@@ -53,7 +53,6 @@ public class WriteDialogQuotation extends Activity {
     private String userName;
     private ParseFile contentsImage;
     private String bodyText;
-    private int likeCount;
     private String createrText;
     private EditText creater;
     private String titleText;
@@ -87,9 +86,7 @@ public class WriteDialogQuotation extends Activity {
         danji.setUserName(userName);
         category = getIntent().getStringExtra("category");
         danji.setCategory(category);
-
-
-
+        danji.setLikeCount(0);
 
     }
 
@@ -201,11 +198,11 @@ public class WriteDialogQuotation extends Activity {
         float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         character.setId(id);
         character.setWidth(width / 3);
-        character.setHeight((int)height);
+        character.setHeight((int) height);
         character.setHint(getString(R.string.character_name));
         character.setTextSize(15);
         character.setGravity(Gravity.CENTER_VERTICAL);
-        character.setPadding((int)padding, 0, (int)padding, 0);
+        character.setPadding((int) padding, 0, (int) padding, 0);
         return character;
     }
 
@@ -220,11 +217,11 @@ public class WriteDialogQuotation extends Activity {
         float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
         dialog.setId(id);
         dialog.setWidth(width * 2 / 3);
-        dialog.setHeight((int)height);
+        dialog.setHeight((int) height);
         dialog.setHint(getString(R.string.dialog_quotation));
         dialog.setGravity(Gravity.CENTER_VERTICAL);
         dialog.setTextSize(15);
-        dialog.setPadding((int)padding, 0, (int)padding, 0);
+        dialog.setPadding((int) padding, 0, (int) padding, 0);
         return dialog;
     }
 
@@ -303,6 +300,10 @@ public class WriteDialogQuotation extends Activity {
     }
 
     private void cropImage(Uri contentUri) {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         //indicate image type and Uri of image
         cropIntent.setDataAndType(contentUri, "image/*");
@@ -312,8 +313,8 @@ public class WriteDialogQuotation extends Activity {
         cropIntent.putExtra("aspectX", 4);
         cropIntent.putExtra("aspectY", 3);
         //indicate output X and Y
-        cropIntent.putExtra("outputX", 256*4);
-        cropIntent.putExtra("outputY", 256*3);
+        cropIntent.putExtra("outputX", width);
+        cropIntent.putExtra("outputY", width*3/4);
         //retrieve data on return
         cropIntent.putExtra("return-data", true);
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
