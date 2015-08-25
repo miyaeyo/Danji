@@ -159,9 +159,6 @@ public class WriteDialogQuotation extends Activity {
 
                 danji.setContentsBody(bodyText);
                 danji.saveInBackground();
-
-                Intent completeIntent = new Intent(this, DanjiMainActivity.class);
-                startActivity(completeIntent);
                 finish();
                 break;
             case R.id.camera:

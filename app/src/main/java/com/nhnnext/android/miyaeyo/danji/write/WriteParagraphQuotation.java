@@ -124,7 +124,6 @@ public class WriteParagraphQuotation extends Activity{
 
     public void buttonClick(View view){
 
-        Intent intent;
         switch (view.getId()){
             case R.id.cancel_button:
                 onBackPressed();
@@ -136,8 +135,6 @@ public class WriteParagraphQuotation extends Activity{
                  Log.d(MyApplication.TAG, "body" + bodyText + "\ntitle" + titleText + "\ncreater" + createrText);
                  danji.saveInBackground();
                  Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
-                 intent = new Intent(this, DanjiMainActivity.class);
-                 startActivity(intent);
                  finish();
                  break;
             case R.id.camera:

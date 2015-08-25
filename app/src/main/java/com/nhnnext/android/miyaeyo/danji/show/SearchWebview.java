@@ -59,7 +59,7 @@ public class SearchWebview extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         TextView referenceSearchQuery = (TextView)findViewById(R.id.reference_search_query);
-        referenceSearchQuery.setText(getResources().getString(R.string.search_keyword) + " " + searchQuery);
+        referenceSearchQuery.setText(getResources().getString(R.string.search_keyword));
 
 
     }

@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.adapter.DrawerListAdapter;
 import com.nhnnext.android.miyaeyo.danji.adapter.ViewPagerAdapter;
@@ -63,6 +64,8 @@ public class DanjiMainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
     private ViewPagerAdapter adapter;
+    private ContentsViewFragment contentsViewFragment = ContentsViewFragment.getInstance("total");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +137,7 @@ public class DanjiMainActivity extends AppCompatActivity {
                     try{
                         getSupportActionBar().setCustomView(mSearchView);
                     }catch (NullPointerException e){
-                        Log.e("ERROR", "ERROR: " + e);
+                        Log.e(MyApplication.TAG, "ERROR: " + e);
                     }
 
                     getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_CUSTOM);
@@ -158,18 +161,24 @@ public class DanjiMainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         //DB연결
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+//        contentsViewFragment = ContentsViewFragment.getInstance("total");
+//        adapter.replaceFragment(0, contentsViewFragment);
+//        contentsViewFragment.onResume();
+
+
+
     }
 
     @Override
@@ -216,7 +225,6 @@ public class DanjiMainActivity extends AppCompatActivity {
 //        super.onPostCreate(savedInstanceState);
 //        mDrawerToggle.syncState();
 //    }
-    private ContentsViewFragment contentsViewFragment = ContentsViewFragment.getInstance("total");
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

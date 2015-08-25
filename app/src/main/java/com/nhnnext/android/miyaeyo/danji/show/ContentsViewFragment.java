@@ -36,6 +36,8 @@ import java.util.List;
 public class ContentsViewFragment extends Fragment {
     private ListView mlistView;
     static ContentsViewFragment contentsViewFragment;
+    private TextView category = null;
+
 
     public static ContentsViewFragment getInstance(String category){
         Bundle args = new Bundle();
@@ -43,9 +45,9 @@ public class ContentsViewFragment extends Fragment {
         if(contentsViewFragment == null) {
             contentsViewFragment = new ContentsViewFragment();
             contentsViewFragment.setArguments(args);
+
         } else {
             contentsViewFragment.getArguments().putAll(args);
-
         }
 
         return contentsViewFragment;
@@ -54,27 +56,33 @@ public class ContentsViewFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.contents_view_f, null);
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
 
     }
 
@@ -84,6 +92,7 @@ public class ContentsViewFragment extends Fragment {
         ArrayList<ContentsListData> contentsListDataArray = new ArrayList<ContentsListData>();
         setContentsList(contentsListDataArray);
         mlistView = (ListView)getActivity().findViewById(R.id.contents_view);
+
     }
 
     @Override
@@ -117,14 +126,17 @@ public class ContentsViewFragment extends Fragment {
     private void setContentsList(final ArrayList<ContentsListData> contentsListDataArray) {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Danji");
+        query.orderByDescending("LikeCount");
         String selectedCategory = getSelectedCategory();
         Log.d("EEE", "2. 받을 때: "+selectedCategory);
         FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
-        categoryFrame.removeAllViews();
+        if(category != null){
+            categoryFrame.removeAllViews();
+        }
 
         if(!selectedCategory.equalsIgnoreCase("total")) {
             query.whereEqualTo("Category", selectedCategory.toLowerCase());
-            TextView category = new TextView(getActivity());
+            category = new TextView(getActivity());
             category.setText(selectedCategory);
             category.setBackgroundColor(getResources().getColor(R.color.tabColor));
             category.setTextColor(getResources().getColor(R.color.contentsBackroundColor));
