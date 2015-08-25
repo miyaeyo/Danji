@@ -59,14 +59,15 @@
             android:gravity="end">
             <TextView
                 android:id="@+id/contents_reference"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/drawerColor"
                 android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/contents_reference_mark"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:text="@string/contents_reference_mark"
                 android:gravity="center"
