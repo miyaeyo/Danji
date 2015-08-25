@@ -32,4 +32,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
+
+    public void replaceFragment(int position, Fragment fragment){
+        mFragmentList.remove(position);
+        mFragmentList.add(position, fragment);
+    }
 }

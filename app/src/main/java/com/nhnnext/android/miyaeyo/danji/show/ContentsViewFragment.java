@@ -1,14 +1,20 @@
 package com.nhnnext.android.miyaeyo.danji.show;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
@@ -29,6 +35,21 @@ import java.util.List;
  */
 public class ContentsViewFragment extends Fragment {
     private ListView mlistView;
+    static ContentsViewFragment contentsViewFragment;
+
+    public static ContentsViewFragment getInstance(String category){
+        Bundle args = new Bundle();
+        args.putString("selectedCategory", category);
+        if(contentsViewFragment == null) {
+            contentsViewFragment = new ContentsViewFragment();
+            contentsViewFragment.setArguments(args);
+        } else {
+            contentsViewFragment.getArguments().putAll(args);
+
+        }
+
+        return contentsViewFragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -85,9 +106,35 @@ public class ContentsViewFragment extends Fragment {
         super.onDetach();
     }
 
+    public String getSelectedCategory(){
+        if(getArguments() == null){
+            return "total";
+        } else {
+            return getArguments().getString("selectedCategory");
+        }
+    }
+
     private void setContentsList(final ArrayList<ContentsListData> contentsListDataArray) {
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Danji");
+        String selectedCategory = getSelectedCategory();
+        Log.d("EEE", "2. 받을 때: "+selectedCategory);
+        FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
+        categoryFrame.removeAllViews();
+
+        if(!selectedCategory.equalsIgnoreCase("total")) {
+            query.whereEqualTo("Category", selectedCategory.toLowerCase());
+            TextView category = new TextView(getActivity());
+            category.setText(selectedCategory);
+            category.setBackgroundColor(getResources().getColor(R.color.tabColor));
+            category.setTextColor(getResources().getColor(R.color.contentsBackroundColor));
+            DisplayMetrics metrics = getActivity().getApplicationContext().getResources().getDisplayMetrics();
+            float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, metrics);
+            category.setPadding((int)padding, (int)padding, (int)padding, (int)padding);
+            categoryFrame.addView(category);
+        }
         query.findInBackground(new FindCallback<ParseObject>() {
+            Dialog progressDialog = ProgressDialog.show(getActivity(), "","connecting in danji...",true);
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if(e == null){
@@ -106,6 +153,7 @@ public class ContentsViewFragment extends Fragment {
                         contentsListDataArray.add(contentsListData);
                         ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray);
                         mlistView.setAdapter(contentsListAdapter);
+                        progressDialog.dismiss();
 
                     }
 
@@ -115,6 +163,7 @@ public class ContentsViewFragment extends Fragment {
 
             }
         });
+
 
 //        String[] imageFileName = getResources().getStringArray(R.array.image_file_name);
 //        String[] contentsBody = getResources().getStringArray(R.array.contents_body);

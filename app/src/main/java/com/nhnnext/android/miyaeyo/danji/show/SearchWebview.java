@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -32,6 +33,7 @@ public class SearchWebview extends AppCompatActivity {
         if(bundle != null){
             searchQuery = (String) bundle.get("Query");
             webView.loadUrl(search + searchQuery);
+
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -58,6 +60,7 @@ public class SearchWebview extends AppCompatActivity {
 
         TextView referenceSearchQuery = (TextView)findViewById(R.id.reference_search_query);
         referenceSearchQuery.setText(getResources().getString(R.string.search_keyword) + " " + searchQuery);
+
 
     }
 

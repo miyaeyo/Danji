@@ -62,6 +62,7 @@ public class DanjiMainActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
+    private ViewPagerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,8 +126,6 @@ public class DanjiMainActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
-
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
@@ -151,10 +150,8 @@ public class DanjiMainActivity extends AppCompatActivity {
                     //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
                     //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     //getSupportActionBar().setHomeButtonEnabled(true);
-
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -208,7 +205,6 @@ public class DanjiMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
 //    @Override
 //    public void onConfigurationChanged(Configuration newConfig) {
 //        super.onConfigurationChanged(newConfig);
@@ -220,24 +216,28 @@ public class DanjiMainActivity extends AppCompatActivity {
 //        super.onPostCreate(savedInstanceState);
 //        mDrawerToggle.syncState();
 //    }
-
+    private ContentsViewFragment contentsViewFragment = ContentsViewFragment.getInstance("total");
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
     }
+
     private void selectItem(int position){
         // categrory에 해당하는 contents만 home화면에 뿌려줌
-        String selectCategory = drawerListItems.get(position).getListTitle();
+        String selectedCategory = drawerListItems.get(position).getListTitle();
+        Log.d("EEE", "1. 보내질때: " + selectedCategory);
+        contentsViewFragment = ContentsViewFragment.getInstance(selectedCategory);
+        adapter.replaceFragment(0, contentsViewFragment);
+        contentsViewFragment.onResume();
         mTabLayout.getTabAt(0).select();
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-
     private void setupViewPager(ViewPager viewPager){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ContentsViewFragment(), "home");
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(contentsViewFragment, "home");
         adapter.addFragment(new ContentsSearchFragment(), "before search");
         adapter.addFragment(new WriteCategoryFragment(), "write");
         adapter.addFragment(new MyPageFragment(), "mypage");
@@ -252,6 +252,5 @@ public class DanjiMainActivity extends AppCompatActivity {
         }
         itemIcon.recycle();
     }
-
 
 }
