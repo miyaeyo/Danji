@@ -69,4 +69,6 @@ public class Danji extends ParseObject{
         return getInt("LikeCount");
     }
 
+    
+
 }

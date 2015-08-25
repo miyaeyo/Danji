@@ -22,10 +22,13 @@ import android.widget.Toast;
 import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
+import com.nhnnext.android.miyaeyo.danji.data.Danji;
 import com.nhnnext.android.miyaeyo.danji.show.SearchWebview;
+import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,16 +60,28 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
         }
 
         ImageButton likeButton = (ImageButton)convertView.findViewById(R.id.like_button);
-        likeButton.setOnClickListener(new View.OnClickListener(){
+        likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count = contentsListData.get(position).getLikeCount();
                 count++;
                 contentsListData.get(position).setLikeCount(count);
                 notifyDataSetChanged();
-                Toast.makeText(getContext(),R.string.like,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.like, Toast.LENGTH_SHORT).show();
+
+                String danjiID = contentsListData.get(position).getDanjiID();
+                ParseQuery<Danji> query = ParseQuery.getQuery(Danji.class);
+                query.getInBackground(danjiID, new GetCallback<Danji>() {
+                    @Override
+                    public void done(Danji danji, ParseException e) {
+                        danji.increment("LikeCount", 1);
+                        danji.saveInBackground();
+                    }
+                });
             }
         });
+
+
 
         TextView contentsBody = (TextView)convertView.findViewById(R.id.contents_body);
         TextView contentsRefer = (TextView)convertView.findViewById(R.id.contents_reference);

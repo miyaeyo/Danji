@@ -8,18 +8,23 @@ import com.parse.ParseFile;
  * Created by miyaeyo on 2015. 8. 5..
  */
 public class ContentsListData {
+    private String danjiID;
     private ParseFile contentsImage;
     private String contentsBody;
     private String contentsRefer;
     private int likeCount;
 
-    public ContentsListData(ParseFile contentsImage, String contentsBody, String contentsRefer, int likeCount){
+    public ContentsListData(String danjiId, ParseFile contentsImage, String contentsBody, String contentsRefer, int likeCount){
+        this.danjiID = danjiId;
         this.contentsImage = contentsImage;
         this.contentsBody = contentsBody;
         this.contentsRefer = contentsRefer;
         this.likeCount = likeCount;
     }
 
+    public String getDanjiID(){
+        return danjiID;
+    }
     public String getContentsBody() {
         return contentsBody;
     }

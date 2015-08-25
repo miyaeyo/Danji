@@ -152,6 +152,7 @@ public class ContentsViewFragment extends Fragment {
                 if(e == null){
                     for(ParseObject pObject: list){
                         Danji danji = (Danji)pObject;
+                        String danjiID = danji.getObjectId();
                         ParseFile image = danji.getContentsImage();
                         String contentsBody = danji.getContentsBody();
                         String contentsRefer;
@@ -161,7 +162,7 @@ public class ContentsViewFragment extends Fragment {
                             contentsRefer = danji.getCreator() + ", " + danji.getContentsTitle();
                         }
                         int likeCount = danji.getLikeCount();
-                        ContentsListData contentsListData = new ContentsListData(image, contentsBody, contentsRefer, likeCount);
+                        ContentsListData contentsListData = new ContentsListData(danjiID, image, contentsBody, contentsRefer, likeCount);
                         contentsListDataArray.add(contentsListData);
                         ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray);
                         mlistView.setAdapter(contentsListAdapter);
