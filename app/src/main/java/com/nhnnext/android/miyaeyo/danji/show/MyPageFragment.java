@@ -94,7 +94,6 @@ public class MyPageFragment extends Fragment {
         ParseQuery
                 .getQuery(Danji.class)
                 .whereEqualTo("UserName", currentUser.getUsername())
-                .orderByDescending("createdAt")
                 .findInBackground(new FindCallback<Danji>() {
                     @Override
                     public void done(List<Danji> danjiList, ParseException e) {
@@ -103,13 +102,6 @@ public class MyPageFragment extends Fragment {
                         }
                         int count = danjiList.size();
                         myWallCount.setText("" + count);
-                        ArrayList<ContentsListData> contentsListDataArray = new ArrayList<ContentsListData>();
-                        for (Danji danji : danjiList) {
-                            contentsListDataArray.add(new ContentsListData(danji));
-                            myContentsListView.setAdapter(
-                                    new ContentsListAdapter(getActivity(), contentsListDataArray));
-                        }
-
                     }
                 });
 
