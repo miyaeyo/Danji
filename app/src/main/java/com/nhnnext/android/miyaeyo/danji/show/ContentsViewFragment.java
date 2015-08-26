@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -125,15 +126,13 @@ public class ContentsViewFragment extends Fragment {
 
     private void setContentsList(final ArrayList<ContentsListData> contentsListDataArray) {
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Danji");
+        ParseQuery<Danji> query = ParseQuery.getQuery(Danji.class);
         query.orderByDescending("createdAt");
         String selectedCategory = getSelectedCategory();
-        Log.d("EEE", "2. 받을 때: "+selectedCategory);
         FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
         if(category != null){
             categoryFrame.removeAllViews();
         }
-
         if(!selectedCategory.equalsIgnoreCase("total")) {
             query.whereEqualTo("Category", selectedCategory.toLowerCase());
             category = new TextView(getActivity());
@@ -145,29 +144,16 @@ public class ContentsViewFragment extends Fragment {
             category.setPadding((int)padding, (int)padding, (int)padding, (int)padding);
             categoryFrame.addView(category);
         }
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<Danji>() {
             Dialog progressDialog = ProgressDialog.show(getActivity(), "","connecting in danji...",true);
             @Override
-            public void done(List<ParseObject> list, ParseException e) {
+            public void done(List<Danji> danjiList, ParseException e) {
                 if(e == null){
-                    for(ParseObject pObject: list){
-                        Danji danji = (Danji)pObject;
-                        String danjiID = danji.getObjectId();
-                        ParseFile image = danji.getContentsImage();
-                        String contentsBody = danji.getContentsBody();
-                        String contentsRefer;
-                        if(danji.getCreator().equals("")){
-                            contentsRefer = danji.getContentsTitle();
-                        } else {
-                            contentsRefer = danji.getCreator() + ", " + danji.getContentsTitle();
-                        }
-                        int likeCount = danji.getLikeCount();
-                        ContentsListData contentsListData = new ContentsListData(danjiID, image, contentsBody, contentsRefer, likeCount);
-                        contentsListDataArray.add(contentsListData);
-                        ContentsListAdapter contentsListAdapter = new ContentsListAdapter(getActivity(), R.layout.contents_list, contentsListDataArray);
-                        mlistView.setAdapter(contentsListAdapter);
+                    for(Danji danji: danjiList){
+                        contentsListDataArray.add(new ContentsListData(danji));
+                        mlistView.setAdapter(
+                                new ContentsListAdapter(getActivity(), contentsListDataArray));
                         progressDialog.dismiss();
-
                     }
 
                 } else {

@@ -1,30 +1,31 @@
 package com.nhnnext.android.miyaeyo.danji.data;
 
-import android.graphics.Bitmap;
-
 import com.parse.ParseFile;
 
 /**
  * Created by miyaeyo on 2015. 8. 5..
  */
 public class ContentsListData {
-    private String danjiID;
-    private ParseFile contentsImage;
-    private String contentsBody;
-    private String contentsRefer;
+    private final String danjiID;
+    private final ParseFile contentsImage;
+    private final String contentsBody;
+    private final String contentsRefer;
+    private final String userName;
     private int likeCount;
 
-    public ContentsListData(String danjiId, ParseFile contentsImage, String contentsBody, String contentsRefer, int likeCount){
-        this.danjiID = danjiId;
-        this.contentsImage = contentsImage;
-        this.contentsBody = contentsBody;
-        this.contentsRefer = contentsRefer;
-        this.likeCount = likeCount;
+    public ContentsListData(Danji danji) {
+        this.danjiID = danji.getObjectId();
+        this.contentsImage = danji.getContentsImage();
+        this.contentsBody = danji.getContentsBody();
+        this.contentsRefer = danji.getReference();
+        this.userName = danji.getUserName();
+        this.likeCount = danji.getLikeCount();
     }
 
-    public String getDanjiID(){
+    public String getDanjiID() {
         return danjiID;
     }
+
     public String getContentsBody() {
         return contentsBody;
     }
@@ -33,7 +34,9 @@ public class ContentsListData {
         return contentsRefer;
     }
 
-    public ParseFile getContentsImage() {return contentsImage;}
+    public ParseFile getContentsImage() {
+        return contentsImage;
+    }
 
     public int getLikeCount() {
         return likeCount;
@@ -41,5 +44,9 @@ public class ContentsListData {
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

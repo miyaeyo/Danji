@@ -69,6 +69,11 @@ public class Danji extends ParseObject{
         return getInt("LikeCount");
     }
 
-    
-
+    public String getReference() {
+        if (getCreator().equals("")) {
+            return getContentsTitle();
+        } else {
+            return getCreator() + ", " + getContentsTitle();
+        }
+    }
 }

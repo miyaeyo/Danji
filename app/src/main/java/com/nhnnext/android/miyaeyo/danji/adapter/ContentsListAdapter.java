@@ -23,12 +23,15 @@ import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
 import com.nhnnext.android.miyaeyo.danji.data.Danji;
+import com.nhnnext.android.miyaeyo.danji.data.Inbox;
 import com.nhnnext.android.miyaeyo.danji.show.SearchWebview;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,12 +44,13 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
     private Context context;
     private int layoutResourceId;
     private ArrayList<ContentsListData> contentsListData;
+    private ParseUser currentUser = ParseUser.getCurrentUser();
 
 
-    public ContentsListAdapter(Context context, int layoutResourceId, ArrayList<ContentsListData> contentsListData){
-        super(context, layoutResourceId, contentsListData);
+    public ContentsListAdapter(Context context, ArrayList<ContentsListData> contentsListData){
+        super(context, R.layout.contents_list, contentsListData);
         this.context = context;
-        this.layoutResourceId = layoutResourceId;
+        this.layoutResourceId = R.layout.contents_list;
         this.contentsListData = contentsListData;
 
     }
@@ -70,6 +74,7 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
                 Toast.makeText(getContext(), R.string.like, Toast.LENGTH_SHORT).show();
 
                 String danjiID = contentsListData.get(position).getDanjiID();
+                Log.d("EEE", "id "+danjiID);
                 ParseQuery<Danji> query = ParseQuery.getQuery(Danji.class);
                 query.getInBackground(danjiID, new GetCallback<Danji>() {
                     @Override
@@ -81,7 +86,24 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
             }
         });
 
-
+        ImageButton inboxButton = (ImageButton)convertView.findViewById(R.id.inbox_button);
+        inboxButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentUserName = currentUser.getUsername();
+                String createdUserName = contentsListData.get(position).getUserName();
+                if(currentUserName.equals(createdUserName)){
+                   Toast.makeText(getContext(), "This content is created by you", Toast.LENGTH_LONG).show();
+                } else {
+                    String inboxId = contentsListData.get(position).getDanjiID();
+                    Inbox inbox = new Inbox();
+                    inbox.setUserName(currentUserName);
+                    inbox.setInboxId(inboxId);
+                    inbox.saveInBackground();
+                    Toast.makeText(getContext(), R.string.pick_inbox, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         TextView contentsBody = (TextView)convertView.findViewById(R.id.contents_body);
         TextView contentsRefer = (TextView)convertView.findViewById(R.id.contents_reference);
