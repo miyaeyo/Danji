@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@color/none">
-    <TextView
-        android:id="@+id/contents_rank_num"
-        android:layout_width="25dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="12dp"
-        android:contentDescription="@string/desc_list_item_icon"
-        android:layout_centerVertical="true"/>
-    <TextView
-        android:id="@+id/contents_rank_title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@id/contents_rank_num"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/contentsBackroundColor"
-        android:gravity="center_vertical"
-        android:paddingRight="40dp"
-        android:textStyle="bold"/>
-</RelativeLayout>
+    android:layout_height="wrap_content"
+    android:background="@color/commonColor">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/buttonColor"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/contents_rank_num"
+            android:layout_width="50dp"
+            android:textColor="@color/commonColor"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="12dp"
+            android:contentDescription="@string/desc_list_item_icon"
+            android:gravity="center"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:id="@+id/contents_rank_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/contents_rank_num"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/contents_rank_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/contents_rank_image"
+            android:textColor="@color/commonColor"
+            android:textSize="20dp"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:gravity="center_vertical"
+            android:paddingRight="40dp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+</LinearLayout>

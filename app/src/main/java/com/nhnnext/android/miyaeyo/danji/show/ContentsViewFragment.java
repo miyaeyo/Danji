@@ -126,7 +126,7 @@ public class ContentsViewFragment extends Fragment {
     private void setContentsList(final ArrayList<ContentsListData> contentsListDataArray) {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Danji");
-        query.orderByDescending("LikeCount");
+        query.orderByDescending("createdAt");
         String selectedCategory = getSelectedCategory();
         Log.d("EEE", "2. 받을 때: "+selectedCategory);
         FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
