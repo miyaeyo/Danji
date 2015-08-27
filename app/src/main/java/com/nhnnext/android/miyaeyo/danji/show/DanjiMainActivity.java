@@ -20,16 +20,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.adapter.DrawerListAdapter;
 import com.nhnnext.android.miyaeyo.danji.adapter.ViewPagerAdapter;
+import com.nhnnext.android.miyaeyo.danji.data.Danji;
 import com.nhnnext.android.miyaeyo.danji.data.DrawerListData;
 import com.nhnnext.android.miyaeyo.danji.write.WriteDialogQuotation;
 import com.nhnnext.android.miyaeyo.danji.write.WriteParagraphQuotation;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** 7/24 lifecycle dummy code
  *  To do
@@ -145,6 +151,15 @@ public class DanjiMainActivity extends AppCompatActivity {
                     mSearchView.setIconifiedByDefault(false);
                     //mSearchView.setFocusable(true);
                     //mSearchView.requestFocusFromTouch();
+                    String query = mSearchView.getQuery().toString();
+
+//                    Log.d("EEE", "1. 보내질때: " + query);
+//                    contentsViewFragment = ContentsViewFragment.getInstance(query);
+//                    adapter.replaceFragment(0, contentsViewFragment);
+//                    contentsViewFragment.onResume();
+//                    mTabLayout.getTabAt(0).select();
+
+
                 } else {
 
                     getSupportActionBar().collapseActionView();
@@ -234,9 +249,9 @@ public class DanjiMainActivity extends AppCompatActivity {
 
     private void selectItem(int position){
         // categrory에 해당하는 contents만 home화면에 뿌려줌
-        String selectedCategory = drawerListItems.get(position).getListTitle();
-        Log.d("EEE", "1. 보내질때: " + selectedCategory);
-        contentsViewFragment = ContentsViewFragment.getInstance(selectedCategory);
+        String query = drawerListItems.get(position).getListTitle();
+        Log.d("EEE", "1. 보내질때: " + query);
+        contentsViewFragment = ContentsViewFragment.getInstance(query);
         adapter.replaceFragment(0, contentsViewFragment);
         contentsViewFragment.onResume();
         mTabLayout.getTabAt(0).select();

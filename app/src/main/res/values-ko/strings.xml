@@ -20,5 +20,7 @@
     <string name="subscription_rank">DANJI의 컨텐츠를 검색해 보세요</string>
     <string name='logging_in'>로그인 중입니다...</string>
     <string name="pick_inbox">Inbox에 저장되었습니다.</string>
+    <string name="empty_result">검색결과가 없습니다.</string>
+
 
 </resources>

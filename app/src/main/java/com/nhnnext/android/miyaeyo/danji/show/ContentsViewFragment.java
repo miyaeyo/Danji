@@ -40,9 +40,9 @@ public class ContentsViewFragment extends Fragment {
     private TextView category = null;
 
 
-    public static ContentsViewFragment getInstance(String category){
+    public static ContentsViewFragment getInstance(String query){
         Bundle args = new Bundle();
-        args.putString("selectedCategory", category);
+        args.putString("Query", query);
         if(contentsViewFragment == null) {
             contentsViewFragment = new ContentsViewFragment();
             contentsViewFragment.setArguments(args);
@@ -120,7 +120,7 @@ public class ContentsViewFragment extends Fragment {
         if(getArguments() == null){
             return "total";
         } else {
-            return getArguments().getString("selectedCategory");
+            return getArguments().getString("Query");
         }
     }
 

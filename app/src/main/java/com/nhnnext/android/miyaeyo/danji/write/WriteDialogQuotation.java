@@ -23,8 +23,6 @@ import android.widget.Toast;
 import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
 import com.nhnnext.android.miyaeyo.danji.data.Danji;
-import com.nhnnext.android.miyaeyo.danji.data.DialogPart;
-import com.nhnnext.android.miyaeyo.danji.show.DanjiMainActivity;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -65,7 +63,6 @@ public class WriteDialogQuotation extends Activity {
     private EditText dialog;
     private String characterText;
     private String dialogText;
-    private DialogPart dialogPart;
     private EditText addCharacter;
     private EditText addDialog;
     private String addCharactertxt;

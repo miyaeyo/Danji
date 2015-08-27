@@ -3,7 +3,6 @@ package com.nhnnext.android.miyaeyo.danji;
 import android.app.Application;
 
 import com.nhnnext.android.miyaeyo.danji.data.Danji;
-import com.nhnnext.android.miyaeyo.danji.data.DialogPart;
 import com.nhnnext.android.miyaeyo.danji.data.Inbox;
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -23,7 +22,6 @@ public class MyApplication extends Application{
         Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(Danji.class);
         ParseObject.registerSubclass(Inbox.class);
-        ParseObject.registerSubclass(DialogPart.class);
         Parse.initialize(this, "9bsJRraxnOoVjbhqsCjA35Gb4OMc29jzwcuZCKRq", "A3ydVgCH2c8QKwLUEmUS36fMprzVingTwDuMVyGb");
         ParseUser.enableAutomaticUser();
         ParseUser.enableRevocableSessionInBackground();
