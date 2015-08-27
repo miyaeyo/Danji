@@ -12,15 +12,15 @@
 > > * WriteCategoryFragment.java : write, write category button(movie, drama, cartoon -> WriteDalogQuotation.java, book, poem, music -> WriteParagraphQuotation.java)
 > > * MyPageFragment.java : mypage, show the contents written by me and inbox contents
 
-> - SearchWebview.jaca : naver search, search query: contents' title
+> - SearchWebview.java : naver search, search query: contents' title
 
 > - WriteDialogQuotation.java: write dialog quotation. write form added by push + button
 
 > - WriteParagraphQuotation.java: wite paragraph quotation.
 
 *2. Parse Object List*
-> - Danji: key "UserName", "Category", "ContentsImage", "ContentsBody", "Creator", "Title", "LikeCount"
-> - Inbox: key "UserName", "InboxId"
+> - Danji.java: key "UserName", "Category", "ContentsImage", "ContentsBody", "Creator", "Title", "LikeCount"
+> - Inbox.java: key "UserName", "InboxId"
 
 
 
