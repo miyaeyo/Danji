@@ -90,6 +90,7 @@ public class DanjiMainActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setLogo(R.drawable.ic_action_danji);
 
 
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
@@ -191,6 +192,7 @@ public class DanjiMainActivity extends AppCompatActivity {
 //        contentsViewFragment = ContentsViewFragment.getInstance("total");
 //        adapter.replaceFragment(0, contentsViewFragment);
 //        contentsViewFragment.onResume();
+
 
 
 

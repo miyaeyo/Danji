@@ -57,6 +57,7 @@
     <string name="start_danji">START DANJI</string>
     <string name="pick_inbox">pick inbox</string>
     <string name="empty_result">Search result is empty</string>
+    <string name="empty_form">You have to fill title, body, image</string>
 
 
 

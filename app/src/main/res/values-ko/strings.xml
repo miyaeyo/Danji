@@ -21,6 +21,8 @@
     <string name='logging_in'>로그인 중입니다...</string>
     <string name="pick_inbox">Inbox에 저장되었습니다.</string>
     <string name="empty_result">검색결과가 없습니다.</string>
+    <string name="empty_form">제목과 본문, 사진은 꼭 입력해야 합니다.</string>
+
 
 
 </resources>

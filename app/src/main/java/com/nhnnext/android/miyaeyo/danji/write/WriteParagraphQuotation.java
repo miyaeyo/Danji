@@ -129,13 +129,18 @@ public class WriteParagraphQuotation extends Activity{
                 onBackPressed();
                 break;
             case R.id.complete_button:
-                 danji.setContentsBody(bodyText);
-                 danji.setContentsTitle(titleText);
-                 danji.setCreator(createrText);
-                 Log.d(MyApplication.TAG, "body" + bodyText + "\ntitle" + titleText + "\ncreater" + createrText);
-                 danji.saveInBackground();
-                 Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
-                 finish();
+                if(contentsImage == null || titleText.equals("") || bodyText.equals("")){
+                    Toast.makeText(this, R.string.empty_form, Toast.LENGTH_LONG).show();
+                } else {
+                    danji.setContentsBody(bodyText);
+                    danji.setContentsTitle(titleText);
+                    danji.setCreator(createrText);
+                    Log.d(MyApplication.TAG, "body" + bodyText + "\ntitle" + titleText + "\ncreater" + createrText);
+                    danji.saveInBackground();
+                    Toast.makeText(getApplicationContext(), R.string.save, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
                  break;
             case R.id.camera:
                 dispatchTakePictureIntent();

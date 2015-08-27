@@ -126,37 +126,44 @@ public class WriteDialogQuotation extends Activity {
     public void buttonClick(View view) {
 
         switch (view.getId()) {
+            default:
+                Log.e(MyApplication.TAG, "Button click error");
             case R.id.cancel_button:
                 onBackPressed();
                 break;
             case R.id.complete_button:
-                Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();
-                createrText = creater.getText().toString();
-                danji.setCreator(createrText);
-                titleText = title.getText().toString();
-                danji.setContentsTitle(titleText);
-
-                characterText = character.getText().toString();
                 dialogText = dialog.getText().toString();
-                if(characterText.equals("")){
-                    bodyText = dialogText;
+                titleText = title.getText().toString();
+                createrText = creater.getText().toString();
+                characterText = character.getText().toString();
+                if(contentsImage == null || titleText.equals("") || dialogText.equals("")){
+                    Toast.makeText(this, R.string.empty_form, Toast.LENGTH_LONG).show();
                 } else {
-                    bodyText = characterText+": "+dialogText+"\n";
-                }
+                    Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();
+                    danji.setCreator(createrText);
+                    danji.setContentsTitle(titleText);
 
-                if(addCount != 0){
-                    for(int i = 0; i < addCount; i++){
-                        addCharacter = (EditText)findViewById(100+i);
-                        addDialog = (EditText)findViewById(200+i);
-                        addCharactertxt = addCharacter.getText().toString();
-                        addDialogtxt = addDialog.getText().toString();
-                        bodyText = bodyText+addCharactertxt+": "+addDialogtxt+"\n";
+                    if(characterText.equals("")){
+                        bodyText = dialogText;
+                    } else {
+                        bodyText = characterText+": "+dialogText+"\n";
                     }
+
+                    if(addCount != 0){
+                        for(int i = 0; i < addCount; i++){
+                            addCharacter = (EditText)findViewById(100+i);
+                            addDialog = (EditText)findViewById(200+i);
+                            addCharactertxt = addCharacter.getText().toString();
+                            addDialogtxt = addDialog.getText().toString();
+                            bodyText = bodyText+addCharactertxt+": "+addDialogtxt+"\n";
+                        }
+                    }
+
+                    danji.setContentsBody(bodyText);
+                    danji.saveInBackground();
+                    finish();
                 }
 
-                danji.setContentsBody(bodyText);
-                danji.saveInBackground();
-                finish();
                 break;
             case R.id.camera:
                 dispatchTakePictureIntent();
