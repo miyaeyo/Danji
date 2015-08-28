@@ -25,6 +25,7 @@ import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
 import com.nhnnext.android.miyaeyo.danji.data.Danji;
 import com.nhnnext.android.miyaeyo.danji.data.Inbox;
 import com.nhnnext.android.miyaeyo.danji.show.SearchWebview;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -36,6 +37,7 @@ import com.parse.ParseUser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by miyaeyo on 2015. 8. 5..
@@ -90,17 +92,35 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
         inboxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String currentUserName = currentUser.getUsername();
+                final String currentUserName = currentUser.getUsername();
                 String createdUserName = contentsListData.get(position).getUserName();
                 if(currentUserName.equals(createdUserName)){
                    Toast.makeText(getContext(), "This content is created by you", Toast.LENGTH_LONG).show();
                 } else {
-                    String inboxId = contentsListData.get(position).getDanjiID();
-                    Inbox inbox = new Inbox();
-                    inbox.setUserName(currentUserName);
-                    inbox.setInboxId(inboxId);
-                    inbox.saveInBackground();
-                    Toast.makeText(getContext(), R.string.pick_inbox, Toast.LENGTH_SHORT).show();
+                    final String inboxId = contentsListData.get(position).getDanjiID();
+                    ParseQuery.getQuery(Inbox.class)
+                            .whereEqualTo("InboxId", inboxId)
+                            .findInBackground(new FindCallback<Inbox>() {
+                                @Override
+                                public void done(List<Inbox> inboxList, ParseException e) {
+                                    if (e != null) {
+                                        Log.e(MyApplication.TAG, "ParseException: " + e);
+                                    } else {
+                                        for(Inbox inbox: inboxList){
+                                            if (inbox.getUserName().equals(currentUserName)) {
+                                                Toast.makeText(getContext(), "Already exist in your inbox", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Inbox newInbox = new Inbox();
+                                                newInbox.setUserName(currentUserName);
+                                                newInbox.setInboxId(inboxId);
+                                                newInbox.saveInBackground();
+                                                Toast.makeText(getContext(), R.string.pick_inbox, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            });
                 }
             }
         });
