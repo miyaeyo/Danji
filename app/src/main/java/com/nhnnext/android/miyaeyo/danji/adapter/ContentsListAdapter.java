@@ -105,6 +105,12 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
                                 public void done(List<Inbox> inboxList, ParseException e) {
                                     if (e != null) {
                                         Log.e(MyApplication.TAG, "ParseException: " + e);
+                                    } else if(inboxList.size() == 0){
+                                        Inbox newInbox = new Inbox();
+                                        newInbox.setUserName(currentUserName);
+                                        newInbox.setInboxId(inboxId);
+                                        newInbox.saveInBackground();
+                                        Toast.makeText(getContext(), R.string.pick_inbox, Toast.LENGTH_SHORT).show();
                                     } else {
                                         for(Inbox inbox: inboxList){
                                             if (inbox.getUserName().equals(currentUserName)) {
@@ -117,7 +123,6 @@ public class ContentsListAdapter extends ArrayAdapter<ContentsListData>{
                                                 Toast.makeText(getContext(), R.string.pick_inbox, Toast.LENGTH_SHORT).show();
                                             }
                                         }
-                                        
                                     }
                                 }
                             });

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nhnnext.android.miyaeyo.danji.MyApplication;
 import com.nhnnext.android.miyaeyo.danji.R;
@@ -128,7 +129,7 @@ public class ContentsViewFragment extends Fragment {
         ParseQuery<Danji> query = ParseQuery.getQuery(Danji.class);
         query.orderByDescending("createdAt");
         String recievedQuery = getRecievedQuery();
-        FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
+        final FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
         if(recievedQueryView != null){
             categoryFrame.removeAllViews();
         }
@@ -152,16 +153,20 @@ public class ContentsViewFragment extends Fragment {
             @Override
             public void done(List<Danji> danjiList, ParseException e) {
                 if(e == null){
-                    for(Danji danji: danjiList){
-                        contentsListDataArray.add(new ContentsListData(danji));
-                        mlistView.setAdapter(
-                                new ContentsListAdapter(getActivity(), contentsListDataArray));
-                        progressDialog.dismiss();
+                    if(danjiList.size() == 0){
+                        Toast.makeText(getActivity(), "Not exist in Danji", Toast.LENGTH_LONG).show();
+                        categoryFrame.removeAllViews();
+                    } else{
+                        for(Danji danji: danjiList){
+                            contentsListDataArray.add(new ContentsListData(danji));
+                            mlistView.setAdapter(
+                                    new ContentsListAdapter(getActivity(), contentsListDataArray));
+                        }
                     }
-
                 } else {
                     Log.d(MyApplication.TAG, "ParseException: "+ e);
                 }
+                progressDialog.dismiss();
 
             }
         });
