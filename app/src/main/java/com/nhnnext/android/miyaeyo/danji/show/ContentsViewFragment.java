@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,8 +23,6 @@ import com.nhnnext.android.miyaeyo.danji.data.ContentsListData;
 import com.nhnnext.android.miyaeyo.danji.data.Danji;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -37,12 +34,14 @@ import java.util.List;
 public class ContentsViewFragment extends Fragment {
     private ListView mlistView;
     static ContentsViewFragment contentsViewFragment;
-    private TextView category = null;
+    private TextView recievedQueryView = null;
+    private static int comeMark = 0; // 0 = default, 1 = come from navigation drawer, 2 = come from search view
 
 
-    public static ContentsViewFragment getInstance(String query){
+    public static ContentsViewFragment getInstance(String query, int mark){
         Bundle args = new Bundle();
         args.putString("Query", query);
+        comeMark = mark;
         if(contentsViewFragment == null) {
             contentsViewFragment = new ContentsViewFragment();
             contentsViewFragment.setArguments(args);
@@ -116,7 +115,7 @@ public class ContentsViewFragment extends Fragment {
         super.onDetach();
     }
 
-    public String getSelectedCategory(){
+    public String getRecievedQuery(){
         if(getArguments() == null){
             return "total";
         } else {
@@ -128,21 +127,25 @@ public class ContentsViewFragment extends Fragment {
 
         ParseQuery<Danji> query = ParseQuery.getQuery(Danji.class);
         query.orderByDescending("createdAt");
-        String selectedCategory = getSelectedCategory();
+        String recievedQuery = getRecievedQuery();
         FrameLayout categoryFrame = (FrameLayout)getActivity().findViewById(R.id.selected_category);
-        if(category != null){
+        if(recievedQueryView != null){
             categoryFrame.removeAllViews();
         }
-        if(!selectedCategory.equalsIgnoreCase("total")) {
-            query.whereEqualTo("Category", selectedCategory.toLowerCase());
-            category = new TextView(getActivity());
-            category.setText(selectedCategory);
-            category.setBackgroundColor(getResources().getColor(R.color.tabColor));
-            category.setTextColor(getResources().getColor(R.color.contentsBackroundColor));
+        if(!recievedQuery.equalsIgnoreCase("total")) {
+            if(comeMark == 1){
+                query.whereEqualTo("Category", recievedQuery.toLowerCase());
+            } else if(comeMark == 2){
+                query.whereContains("Title", recievedQuery);
+            }
+            recievedQueryView = new TextView(getActivity());
+            recievedQueryView.setText(recievedQuery);
+            recievedQueryView.setBackgroundColor(getResources().getColor(R.color.tabColor));
+            recievedQueryView.setTextColor(getResources().getColor(R.color.contentsBackroundColor));
             DisplayMetrics metrics = getActivity().getApplicationContext().getResources().getDisplayMetrics();
             float padding  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, metrics);
-            category.setPadding((int)padding, (int)padding, (int)padding, (int)padding);
-            categoryFrame.addView(category);
+            recievedQueryView.setPadding((int) padding, (int) padding, (int) padding, (int) padding);
+            categoryFrame.addView(recievedQueryView);
         }
         query.findInBackground(new FindCallback<Danji>() {
             Dialog progressDialog = ProgressDialog.show(getActivity(), "","connecting in danji...",true);

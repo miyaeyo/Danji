@@ -70,7 +70,8 @@ public class DanjiMainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private ArrayList<DrawerListData> drawerListItems = new ArrayList<DrawerListData>();
     private ViewPagerAdapter adapter;
-    private ContentsViewFragment contentsViewFragment = ContentsViewFragment.getInstance("total");
+    private ContentsViewFragment contentsViewFragment = ContentsViewFragment.getInstance("total", 0);
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,62 @@ public class DanjiMainActivity extends AppCompatActivity {
         setDrawerList(drawerListItems);
         mDrawerList.setAdapter(new DrawerListAdapter(this, drawerListItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    SearchManager mSearchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                    mSearchView = new SearchView(getApplicationContext());
+                    try {
+                        getSupportActionBar().setCustomView(mSearchView);
+                    } catch (NullPointerException e) {
+                        Log.e(MyApplication.TAG, "ERROR: " + e);
+                    }
+
+                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_CUSTOM);
+                    mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(getComponentName()));
+                    mSearchView.setIconifiedByDefault(false);
+                    //mSearchView.setFocusable(true);
+                    //mSearchView.requestFocusFromTouch();
+                    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            contentsViewFragment = ContentsViewFragment.getInstance(query, 2);
+                            adapter.replaceFragment(0, contentsViewFragment);
+                            contentsViewFragment.onResume();
+                            mTabLayout.getTabAt(0).select();
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            return false;
+                        }
+                    });
+
+
+                } else {
+
+                    getSupportActionBar().collapseActionView();
+                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_TITLE);
+                    getSupportActionBar().setLogo(R.drawable.ic_action_danji);
+
+                    //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+                    //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    //getSupportActionBar().setHomeButtonEnabled(true);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeButtonEnabled(true);
@@ -131,51 +188,7 @@ public class DanjiMainActivity extends AppCompatActivity {
 //        };
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 1) {
-                    SearchManager mSearchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-                    SearchView mSearchView = new SearchView(getApplicationContext());
-                    try{
-                        getSupportActionBar().setCustomView(mSearchView);
-                    }catch (NullPointerException e){
-                        Log.e(MyApplication.TAG, "ERROR: " + e);
-                    }
-
-                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_CUSTOM);
-                    mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(getComponentName()));
-                    mSearchView.setIconifiedByDefault(false);
-                    //mSearchView.setFocusable(true);
-                    //mSearchView.requestFocusFromTouch();
-                    String query = mSearchView.getQuery().toString();
-
-//                    Log.d("EEE", "1. 보내질때: " + query);
-//                    contentsViewFragment = ContentsViewFragment.getInstance(query);
-//                    adapter.replaceFragment(0, contentsViewFragment);
-//                    contentsViewFragment.onResume();
-//                    mTabLayout.getTabAt(0).select();
-
-
-                } else {
-
-                    getSupportActionBar().collapseActionView();
-                    getSupportActionBar().setDisplayOptions(ToolbarActionBar.DISPLAY_SHOW_TITLE);
-
-                    //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-                    //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    //getSupportActionBar().setHomeButtonEnabled(true);
-                }
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 
@@ -195,6 +208,18 @@ public class DanjiMainActivity extends AppCompatActivity {
 
 
 
+
+//        try{
+//            String query = mSearchView.getQuery().toString();
+//            Log.d("EEE", "1. 보내질때: " + query);
+//            contentsViewFragment = ContentsViewFragment.getInstance(query, 2);
+//            adapter.replaceFragment(0, contentsViewFragment);
+//            contentsViewFragment.onResume();
+//            mTabLayout.getTabAt(0).select();
+//
+//        } catch (NullPointerException e){
+//            Log.e(MyApplication.TAG, "NullPointerException:" + e);
+//        }
 
     }
 
@@ -253,7 +278,7 @@ public class DanjiMainActivity extends AppCompatActivity {
         // categrory에 해당하는 contents만 home화면에 뿌려줌
         String query = drawerListItems.get(position).getListTitle();
         Log.d("EEE", "1. 보내질때: " + query);
-        contentsViewFragment = ContentsViewFragment.getInstance(query);
+        contentsViewFragment = ContentsViewFragment.getInstance(query, 1);
         adapter.replaceFragment(0, contentsViewFragment);
         contentsViewFragment.onResume();
         mTabLayout.getTabAt(0).select();

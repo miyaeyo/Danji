@@ -58,6 +58,7 @@ public class ContentsSearchFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String searchQuery = contentsRankDataArray.get(position).getContentsTitle();
+
             }
         });
     }
